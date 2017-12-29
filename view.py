@@ -3,6 +3,7 @@ import getbooks
 import re
 from tabulate import tabulate
 import prettytable
+import charts
 
 def askForId():
     regex = r'^\d+$'
@@ -27,7 +28,7 @@ def askForYears():
 
     while True:
         try:
-            years = [int(x) for x in input('\nEnter the years you want to analyze separated with spaces.\n').split()]
+            years = [int(x) for x in input('\nEnter the years you want to analyze separated by spaces.\n').split()]
             break
         except ValueError:
             print("Sorry, I didn't understand that.")
@@ -83,48 +84,62 @@ def displayAveragePagesPerDay(years, id):
 
 def displayMostPopularBooks(years, id):
     x = prettytable.PrettyTable(['Number of ratings', 'Title', 'Author', 'Started', 'Finished'])
+    count = []
     x.align = 'l'
     for year in years:
         books = stats.bookWithMostRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id))
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+        count.append(int(innerlist[4]))
     print(x)
+    charts.mostPopularBooks(count, years)
 
 
 def displayLeastPopularBooks(years, id):
     x = prettytable.PrettyTable(['Number of ratings', 'Title', 'Author', 'Started', 'Finished'])
+    count = []
     x.align = 'l'
     for year in years:
         books = stats.bookWithLeastRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id))
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+        count.append(int(innerlist[4]))
     print(x)
+    charts.leastPopularBooks(count, years)
 
 
 def displayAverageNumberOfRatings(years, id):
     x = prettytable.PrettyTable(['Average ratings count', 'Year'])
+    count = []
     x.align = 'l'
     for year in years:
-        pages = stats.averageNumberOfRatings(getbooks.getBooksFromShelfGivenYear(year, id))
-        x.add_row(['{0:.2f}'.format(pages), year])
+        ratings = stats.averageNumberOfRatings(getbooks.getBooksFromShelfGivenYear(year, id))
+        x.add_row(['{0:.2f}'.format(ratings), year])
+        count.append(ratings)
     print(x)
+    charts.averageNumberOfRatings(count, years)
 
 
 def displayWorstBooks(years, id):
     x = prettytable.PrettyTable(['Rating', 'Title', 'Author', 'Started', 'Finished'])
+    ratings = []
     x.align = 'l'
     for year in years:
         books = stats.worstBookRead(getbooks.getBooksFromShelfGivenYear(year, id))
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+        ratings.append(float(innerlist[3]))
     print(x)
+    charts.worstBooks(ratings, years)
 
 
 def displayBestBooks(years, id):
     x = prettytable.PrettyTable(['Rating', 'Title', 'Author', 'Started', 'Finished'])
+    ratings = []
+    #titles = []
     x.align = 'l'
     bestBooks = [['Rating', 'Title', 'Author', 'Started', 'Finished']]
     for year in years:
@@ -132,14 +147,20 @@ def displayBestBooks(years, id):
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+        ratings.append(float(innerlist[3]))
+        #titles.append(innerlist[0])
     print(x)
+    charts.bestBooks(ratings, years)
 
 
 def displayAverageRating(years, id):
     x = prettytable.PrettyTable(['Average rating', 'Year'])
+    ratings = []
     x.align = 'l'
     averageRating = [['Average rating', 'Year']]
     for year in years:
-        pages = stats.averageRatingOfBook(getbooks.getBooksFromShelfGivenYear(year, id))
-        x.add_row(['{0:.2f}'.format(pages), year])
+        averageRating = stats.averageRatingOfBook(getbooks.getBooksFromShelfGivenYear(year, id))
+        x.add_row(['{0:.2f}'.format(averageRating), year])
+        ratings.append(float(averageRating))
     print(x)
+    charts.averageRating(ratings, years)
