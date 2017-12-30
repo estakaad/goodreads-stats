@@ -2,12 +2,23 @@ import matplotlib.pyplot as plt
 import stats
 import getbooks
 import view
+import matplotlib.ticker
+
+# Helper function for force displaying of integers instead of floats as ticks
+def displayIntegersAsTicks():
+    locator = matplotlib.ticker.MultipleLocator(1)
+    plt.gca().xaxis.set_major_locator(locator)
+    formatter = matplotlib.ticker.StrMethodFormatter("{x:.0f}")
+    plt.gca().xaxis.set_major_formatter(formatter)
 
 # Draws a graph of the books that took the longest to finish
-# Doesn't display titles and displays years as floats
+# Doesn't display titles
 def longestReadBooks(days, years):
+
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    displayIntegersAsTicks()
 
     ax1.set_title("Longest read books\n")
     ax1.set_ylabel('Days')
@@ -24,11 +35,12 @@ def longestReadBooks(days, years):
 
 
 # Draws the graph that shows how many pages were read in a given year
-# Displays years as floats
 def totalPagesRead(count, years):
 
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    displayIntegersAsTicks()
 
     ax1.set_title("Pages read\n")
     ax1.set_ylabel('Pages')
@@ -45,10 +57,11 @@ def totalPagesRead(count, years):
 
 
 # Draws the graph that shows how many pages were read on an average day
-# Displays years as floats
 def averageNumberOfPages(count, years):
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    displayIntegersAsTicks()
 
     ax1.set_title("Pages read per day\n")
     ax1.set_ylabel('Count')
@@ -65,11 +78,13 @@ def averageNumberOfPages(count, years):
 
 
 # Draws the graph that shows the biggest number of ratings a book read given year has
-# Doesn't display titles and displays years as floats
+# Doesn't display titles
 def mostPopularBooks(count, years):
 
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    displayIntegersAsTicks()
 
     ax1.set_title("Most popular books\n")
     ax1.set_ylabel('Number of ratings')
@@ -86,11 +101,13 @@ def mostPopularBooks(count, years):
 
 
 # Draws the graph that shows the smallest number of ratings a book read given year has
-# Doesn't display titles and displays years as floats
+# Doesn't display titles
 def leastPopularBooks(count, years):
 
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    displayIntegersAsTicks()
 
     ax1.set_title("Least popular books\n")
     ax1.set_ylabel('Number of ratings')
@@ -107,11 +124,12 @@ def leastPopularBooks(count, years):
 
 
 # Draws the graph that shows the number of ratings a book read in given year has on average
-# Displays years as floats
 def averageNumberOfRatings(count, years):
 
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    displayIntegersAsTicks()
 
     ax1.set_title("Average count of ratings\n")
     ax1.set_ylabel('Count')
@@ -122,16 +140,18 @@ def averageNumberOfRatings(count, years):
     plt.grid(True)
 
     for x in range(0, len(count)):
-        plt.annotate((str(count[x])), xy=(years[x], count[x]),xytext=(years[x]-0.5, count[x]-0.5))
+        plt.annotate(('{0:.2f}'.format(count[x])), xy=(years[x], count[x]),xytext=(years[x]-0.5, count[x]-0.5))
 
     plt.show()
 
 
 # Draws a graph of worst books read
-# Doesn't display titles and displays years as floats
+# Doesn't display titles
 def worstBooks(ratings, years):
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    displayIntegersAsTicks()
 
     ax1.set_title("Worst books read\n")
     ax1.set_ylabel('Rating')
@@ -148,11 +168,13 @@ def worstBooks(ratings, years):
 
 
 # Draws a graph of best books read
-# Doesn't display titles and displays years as floats
+# Doesn't display titles
 def bestBooks(ratings, years):
 
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    displayIntegersAsTicks()
 
     ax1.set_title("Best books read\n")
     ax1.set_ylabel('Rating')
@@ -169,11 +191,12 @@ def bestBooks(ratings, years):
 
 
 # Draws a graph of average rating of books
-# Displays years as floats
 def averageRating(ratings, years):
 
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    displayIntegersAsTicks()
 
     ax1.set_title("Average rating of read books\n")
     ax1.set_ylabel('Rating')
