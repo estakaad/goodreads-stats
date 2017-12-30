@@ -30,6 +30,8 @@ while q != 'q':
         view.displayBestBooks(years, id, fromFile)
     elif q == 'i':
         view.displayAverageRating(years, id, fromFile)
+    elif q == 'j':
+        view.displayAllStats(years, id, fromFile)
     elif q == 'q':
         break
     else:

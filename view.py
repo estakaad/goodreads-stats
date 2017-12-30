@@ -47,7 +47,8 @@ def displayQuestions():
              ['f', 'How popular was an average book I read in year x?'],
              ['g', 'What was the worst book I read in year x?'],
              ['h', 'What was the best book I read in year x?'],
-             ['i', 'How good was the average book I read in year x?']
+             ['i', 'How good was the average book I read in year x?'],
+             ['j', 'Show me all the answers!']
             ]
 
     print(tabulate(table))
@@ -73,6 +74,8 @@ def displayLongestReadBooks(years, id, fromFile):
         innerlist = list(books_list[0].values())
         x.add_row([books_list[1], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         days.append(books_list[1])
+    print('')
+    print('BOOKS THAT TOOK THE LONGEST TO FINISH')
     print(x)
     charts.longestReadBooks(days, years)
 
@@ -82,9 +85,11 @@ def displayTotalPages(years, id, fromFile):
     x.align = 'l'
     count = []
     for year in years:
-        pages = stats.totalPagesReadGivenYear(getbooks.getBooksFromShelfGivenYear(year, id))
+        pages = stats.totalPagesReadGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         x.add_row([pages, year])
         count.append(int(pages))
+    print('')
+    print('TOTAL NUMBER OF PAGES READ')
     print(x)
     charts.totalPagesRead(count, years)
 
@@ -94,9 +99,11 @@ def displayAveragePagesPerDay(years, id, fromFile):
     count = []
     x.align = 'l'
     for year in years:
-        pages = stats.averageNumberOfPagesReadInDay(getbooks.getBooksFromShelfGivenYear(year, id), year)
+        pages = stats.averageNumberOfPagesReadInDay(getbooks.getBooksFromShelfGivenYear(year, id, fromFile), year)
         x.add_row(['{0:.2f}'.format(pages), year])
         count.append(pages)
+    print('')
+    print('AVERAGE NUMBER OF PAGES READ PER DAY')
     print(x)
     charts.averageNumberOfPages(count, years)
 
@@ -106,11 +113,13 @@ def displayMostPopularBooks(years, id, fromFile):
     count = []
     x.align = 'l'
     for year in years:
-        books = stats.bookWithMostRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id))
+        books = stats.bookWithMostRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         count.append(int(innerlist[4]))
+    print('')
+    print('MOST POPULAR BOOKS READ (POPULAR = BOOKS WITH THE HIGHEST NUMBER OF RATINGS)')
     print(x)
     charts.mostPopularBooks(count, years)
 
@@ -120,11 +129,13 @@ def displayLeastPopularBooks(years, id, fromFile):
     count = []
     x.align = 'l'
     for year in years:
-        books = stats.bookWithLeastRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id))
+        books = stats.bookWithLeastRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         count.append(int(innerlist[4]))
+    print('')
+    print('LEAST POPULAR BOOKS READ (LEAST POPULAR = BOOKS WITH THE LOWEST NUMBER OF RATINGS)')
     print(x)
     charts.leastPopularBooks(count, years)
 
@@ -134,9 +145,11 @@ def displayAverageNumberOfRatings(years, id, fromFile):
     count = []
     x.align = 'l'
     for year in years:
-        ratings = stats.averageNumberOfRatings(getbooks.getBooksFromShelfGivenYear(year, id))
+        ratings = stats.averageNumberOfRatings(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         x.add_row(['{0:.2f}'.format(ratings), year])
         count.append(ratings)
+    print('')
+    print('AVERAGE NUMBER OF RATINGS OF BOOKS READ')
     print(x)
     charts.averageNumberOfRatings(count, years)
 
@@ -146,11 +159,13 @@ def displayWorstBooks(years, id, fromFile):
     ratings = []
     x.align = 'l'
     for year in years:
-        books = stats.worstBookRead(getbooks.getBooksFromShelfGivenYear(year, id))
+        books = stats.worstBookRead(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         ratings.append(float(innerlist[3]))
+    print('')
+    print('WORST BOOKS READ')
     print(x)
     charts.worstBooks(ratings, years)
 
@@ -162,12 +177,14 @@ def displayBestBooks(years, id, fromFile):
     x.align = 'l'
     bestBooks = [['Rating', 'Title', 'Author', 'Started', 'Finished']]
     for year in years:
-        books = stats.bestBookRead(getbooks.getBooksFromShelfGivenYear(year, id))
+        books = stats.bestBookRead(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         ratings.append(float(innerlist[3]))
         #titles.append(innerlist[0])
+    print('')
+    print('BEST BOOKS READ')
     print(x)
     charts.bestBooks(ratings, years)
 
@@ -178,8 +195,22 @@ def displayAverageRating(years, id, fromFile):
     x.align = 'l'
     averageRating = [['Average rating', 'Year']]
     for year in years:
-        averageRating = stats.averageRatingOfBook(getbooks.getBooksFromShelfGivenYear(year, id))
+        averageRating = stats.averageRatingOfBook(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         x.add_row(['{0:.2f}'.format(averageRating), year])
         ratings.append(float(averageRating))
+    print('')
+    print('AVERAGE RATING OF BOOKS READ')
     print(x)
     charts.averageRating(ratings, years)
+
+
+def displayAllStats(years, id, fromFile):
+    displayLongestReadBooks(years, id, fromFile)
+    displayTotalPages(years, id, fromFile)
+    displayAveragePagesPerDay(years, id, fromFile)
+    displayMostPopularBooks(years, id, fromFile)
+    displayLeastPopularBooks(years, id, fromFile)
+    displayAverageNumberOfRatings(years, id, fromFile)
+    displayWorstBooks(years, id, fromFile)
+    displayBestBooks(years, id, fromFile)
+    displayAverageRating(years, id, fromFile)
