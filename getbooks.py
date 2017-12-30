@@ -2,6 +2,8 @@ import configparser
 import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime
+import pickle
+import view
 
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -106,9 +108,34 @@ def getAllBooksOnShelf(userId):
     return books
 
 
+# Saves dictionary to file
+def serializeBooks(books):
+    f = open('books.txt', 'wb')
+    pickle.dump(books, f)
+    f.close()
+
+
+# Reads dictionary from file
+def deserializeBooks(file):
+    f = open(file, 'rb')
+    dict = pickle.load(f)
+    f.close()
+    return dict
+
+
+def loadFromFileOrFetchNewDataAndSerialize(userId, fromFile):
+    if fromFile:
+        books = deserializeBooks('books.txt')
+    else:
+        books = getAllBooksOnShelf(userId)
+        serializeBooks(books)
+
+    return books
+
+
 # Returns a dictionary of books finished during the given year.
-def getBooksFromShelfGivenYear(year, userId):
-    booksInYear = getAllBooksOnShelf(userId)
+def getBooksFromShelfGivenYear(year, userId, fromFile):
+    booksInYear = loadFromFileOrFetchNewDataAndSerialize(userId, fromFile)
 
     booksInYear = { k:v for k,v in booksInYear.items() if v['read_at'] != '-' }
     booksInYear = { k:v for k,v in booksInYear.items() if datetime.strptime(str(v['read_at']), '%a %b %d %H:%M:%S %z %Y').year == year }

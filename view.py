@@ -47,18 +47,28 @@ def displayQuestions():
              ['f', 'How popular was an average book I read in year x?'],
              ['g', 'What was the worst book I read in year x?'],
              ['h', 'What was the best book I read in year x?'],
-             ['i', 'How good was the average book I read in year x?'],
+             ['i', 'How good was the average book I read in year x?']
             ]
 
     print(tabulate(table))
 
 
-def displayLongestReadBooks(years, id):
+def askLoadingFromFile():
+
+    option = input('Do you want to load the books from a file? y/n \n')
+
+    if option == 'y':
+        return True
+
+    return False
+
+
+def displayLongestReadBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Days read', 'Title', 'Author', 'Started', 'Finished'])
     days = []
     x.align = 'l'
     for year in years:
-        books = stats.bookReadForTheLongestInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id))
+        books = stats.bookReadForTheLongestInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([books_list[1], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
@@ -67,7 +77,7 @@ def displayLongestReadBooks(years, id):
     charts.longestReadBooks(days, years)
 
 
-def displayTotalPages(years, id):
+def displayTotalPages(years, id, fromFile):
     x = prettytable.PrettyTable(['Pages', 'Year'])
     x.align = 'l'
     count = []
@@ -79,7 +89,7 @@ def displayTotalPages(years, id):
     charts.totalPagesRead(count, years)
 
 
-def displayAveragePagesPerDay(years, id):
+def displayAveragePagesPerDay(years, id, fromFile):
     x = prettytable.PrettyTable(['Pages per day', 'Year'])
     count = []
     x.align = 'l'
@@ -91,7 +101,7 @@ def displayAveragePagesPerDay(years, id):
     charts.averageNumberOfPages(count, years)
 
 
-def displayMostPopularBooks(years, id):
+def displayMostPopularBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Number of ratings', 'Title', 'Author', 'Started', 'Finished'])
     count = []
     x.align = 'l'
@@ -105,7 +115,7 @@ def displayMostPopularBooks(years, id):
     charts.mostPopularBooks(count, years)
 
 
-def displayLeastPopularBooks(years, id):
+def displayLeastPopularBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Number of ratings', 'Title', 'Author', 'Started', 'Finished'])
     count = []
     x.align = 'l'
@@ -119,7 +129,7 @@ def displayLeastPopularBooks(years, id):
     charts.leastPopularBooks(count, years)
 
 
-def displayAverageNumberOfRatings(years, id):
+def displayAverageNumberOfRatings(years, id, fromFile):
     x = prettytable.PrettyTable(['Average ratings count', 'Year'])
     count = []
     x.align = 'l'
@@ -131,7 +141,7 @@ def displayAverageNumberOfRatings(years, id):
     charts.averageNumberOfRatings(count, years)
 
 
-def displayWorstBooks(years, id):
+def displayWorstBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Rating', 'Title', 'Author', 'Started', 'Finished'])
     ratings = []
     x.align = 'l'
@@ -145,7 +155,7 @@ def displayWorstBooks(years, id):
     charts.worstBooks(ratings, years)
 
 
-def displayBestBooks(years, id):
+def displayBestBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Rating', 'Title', 'Author', 'Started', 'Finished'])
     ratings = []
     #titles = []
@@ -162,7 +172,7 @@ def displayBestBooks(years, id):
     charts.bestBooks(ratings, years)
 
 
-def displayAverageRating(years, id):
+def displayAverageRating(years, id, fromFile):
     x = prettytable.PrettyTable(['Average rating', 'Year'])
     ratings = []
     x.align = 'l'
