@@ -67,6 +67,7 @@ def askLoadingFromFile():
 def displayLongestReadBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Days read', 'Title', 'Author', 'Started', 'Finished'])
     days = []
+    titles = []
     x.align = 'l'
     for year in years:
         books = stats.bookReadForTheLongestInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
@@ -74,10 +75,11 @@ def displayLongestReadBooks(years, id, fromFile):
         innerlist = list(books_list[0].values())
         x.add_row([books_list[1], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         days.append(books_list[1])
+        titles.append(innerlist[0])
     print('')
     print('BOOKS THAT TOOK THE LONGEST TO FINISH')
     print(x)
-    charts.longestReadBooks(days, years)
+    charts.longestReadBooks(days, years, titles)
 
 
 def displayTotalPages(years, id, fromFile):
@@ -111,6 +113,7 @@ def displayAveragePagesPerDay(years, id, fromFile):
 def displayMostPopularBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Number of ratings', 'Title', 'Author', 'Started', 'Finished'])
     count = []
+    titles = []
     x.align = 'l'
     for year in years:
         books = stats.bookWithMostRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
@@ -118,15 +121,17 @@ def displayMostPopularBooks(years, id, fromFile):
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         count.append(int(innerlist[4]))
+        titles.append(innerlist[0])
     print('')
     print('MOST POPULAR BOOKS READ (POPULAR = BOOKS WITH THE HIGHEST NUMBER OF RATINGS)')
     print(x)
-    charts.mostPopularBooks(count, years)
+    charts.mostPopularBooks(count, years, titles)
 
 
 def displayLeastPopularBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Number of ratings', 'Title', 'Author', 'Started', 'Finished'])
     count = []
+    titles = []
     x.align = 'l'
     for year in years:
         books = stats.bookWithLeastRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
@@ -134,10 +139,11 @@ def displayLeastPopularBooks(years, id, fromFile):
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         count.append(int(innerlist[4]))
+        titles.append(innerlist[0])
     print('')
     print('LEAST POPULAR BOOKS READ (LEAST POPULAR = BOOKS WITH THE LOWEST NUMBER OF RATINGS)')
     print(x)
-    charts.leastPopularBooks(count, years)
+    charts.leastPopularBooks(count, years, titles)
 
 
 def displayAverageNumberOfRatings(years, id, fromFile):
@@ -157,6 +163,7 @@ def displayAverageNumberOfRatings(years, id, fromFile):
 def displayWorstBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Rating', 'Title', 'Author', 'Started', 'Finished'])
     ratings = []
+    titles = []
     x.align = 'l'
     for year in years:
         books = stats.worstBookRead(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
@@ -164,16 +171,17 @@ def displayWorstBooks(years, id, fromFile):
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         ratings.append(float(innerlist[3]))
+        titles.append(innerlist[0])
     print('')
     print('WORST BOOKS READ')
     print(x)
-    charts.worstBooks(ratings, years)
+    charts.worstBooks(ratings, years, titles)
 
 
 def displayBestBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Rating', 'Title', 'Author', 'Started', 'Finished'])
     ratings = []
-    #titles = []
+    titles = []
     x.align = 'l'
     bestBooks = [['Rating', 'Title', 'Author', 'Started', 'Finished']]
     for year in years:
@@ -182,11 +190,11 @@ def displayBestBooks(years, id, fromFile):
         innerlist = list(books_list[0].values())
         x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
         ratings.append(float(innerlist[3]))
-        #titles.append(innerlist[0])
+        titles.append(innerlist[0])
     print('')
     print('BEST BOOKS READ')
     print(x)
-    charts.bestBooks(ratings, years)
+    charts.bestBooks(ratings, years, titles)
 
 
 def displayAverageRating(years, id, fromFile):
