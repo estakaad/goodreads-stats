@@ -10,7 +10,8 @@ view.displayQuestions()
 q = ''
 
 while q != 'q':
-    q = input('Choose a question and enter the letter in front of it or enter q to quit.\n').lower()
+
+    q = input().lower()
 
     if q == 'a':
         view.displayLongestReadBooks(years, id, fromFile)
