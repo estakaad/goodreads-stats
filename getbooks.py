@@ -8,6 +8,7 @@ import view
 config = configparser.ConfigParser()
 config.read("config.ini")
 
+
 # Helper function for getting settings from config.ini
 def configSectionMap(section):
     dict1 = {}
@@ -123,8 +124,12 @@ def deserializeBooks(file):
     return dict
 
 
+# Returns all books the user has marked as read. This can be done either making
+# a GET request or loading the file with the serialized dictionary. In case
+# loading from file is chosen, a file with a user's Goodread's ID is looked for.
+# In case it doesn't exist, a GET request is made instead. After a GET request,
+# the results are serialized.
 def loadFromFileOrFetchNewDataAndSerialize(userId, fromFile):
-
     books = {}
 
     if fromFile:
