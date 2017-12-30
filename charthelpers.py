@@ -11,11 +11,16 @@ def displayIntegersAsTicks():
 
 
 # Stuff that is common in all charts
-def commonChartSettings():
+def commonChartSettings(y, x, r):
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
     displayIntegersAsTicks()
     plt.grid(True)
+    plt.plot(x, y, linestyle="dashed", marker="o", color="green")
+    if r:
+        plt.axis([min(x)-1, max(x)+1, 0, 5])
+    else:
+        plt.axis([min(x)-1, max(x)+1, 0, max(y)*1.2])
 
     return ax1
 
