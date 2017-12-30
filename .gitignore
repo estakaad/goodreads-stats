@@ -102,3 +102,4 @@ ENV/
 
 config.ini
 books.txt
+*.txt

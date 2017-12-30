@@ -109,8 +109,8 @@ def getAllBooksOnShelf(userId):
 
 
 # Saves dictionary to file
-def serializeBooks(books):
-    f = open('books.txt', 'wb')
+def serializeBooks(books, userId):
+    f = open((userId + '.txt'), 'wb')
     pickle.dump(books, f)
     f.close()
 
@@ -124,11 +124,19 @@ def deserializeBooks(file):
 
 
 def loadFromFileOrFetchNewDataAndSerialize(userId, fromFile):
+
+    books = {}
+
     if fromFile:
-        books = deserializeBooks('books.txt')
+        try:
+            books = deserializeBooks(userId + '.txt')
+        except IOError:
+            print('File does not appear to exist. Trying get books from Goodreads instead...')
+            books = getAllBooksOnShelf(userId)
+            serializeBooks(books, userId)
     else:
         books = getAllBooksOnShelf(userId)
-        serializeBooks(books)
+        serializeBooks(books, userId)
 
     return books
 
