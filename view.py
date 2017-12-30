@@ -1,7 +1,6 @@
 import stats
 import getbooks
 import re
-from tabulate import tabulate
 import prettytable
 import charts
 
@@ -38,20 +37,28 @@ def askForYears():
 
 def displayQuestions():
 
-    table = [
-             ['a', 'Which book took the longest to read?'],
-             ['b', 'How many pages did I read in year x?'],
-             ['c', 'How many pages did I read on an average day in year x?'],
-             ['d', 'Which was the most popular book I read in year x?'],
-             ['e', 'Which was the least popular book I read in year x?'],
-             ['f', 'How popular was an average book I read in year x?'],
-             ['g', 'What was the worst book I read in year x?'],
-             ['h', 'What was the best book I read in year x?'],
-             ['i', 'How good was the average book I read in year x?'],
-             ['j', 'Show me all the answers!']
-            ]
+    print('Choose a question and enter the letter in front of it or enter q to quit.\n')
 
-    print(tabulate(table))
+    table = prettytable.PrettyTable(['Option', 'Question'])
+
+    questions = [
+                 ['a', 'Which book took the longest to read?'],
+                 ['b', 'How many pages did I read in year x?'],
+                 ['c', 'How many pages did I read on an average day in year x?'],
+                 ['d', 'Which was the most popular book I read in year x?'],
+                 ['e', 'Which was the least popular book I read in year x?'],
+                 ['f', 'How popular was an average book I read in year x?'],
+                 ['g', 'What was the worst book I read in year x?'],
+                 ['h', 'What was the best book I read in year x?'],
+                 ['i', 'How good was the average book I read in year x?'],
+                 ['j', 'Show me all the answers!']
+                ]
+
+    for question in questions:
+        table.add_row(question)
+
+    table.align = 'l'
+    print(table)
 
 
 def askLoadingFromFile():
@@ -183,7 +190,6 @@ def displayBestBooks(years, id, fromFile):
     ratings = []
     titles = []
     x.align = 'l'
-    bestBooks = [['Rating', 'Title', 'Author', 'Started', 'Finished']]
     for year in years:
         books = stats.bestBookRead(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         books_list = list(books.values())
