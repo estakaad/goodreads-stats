@@ -3,60 +3,69 @@ import stats
 import getbooks
 import view
 
-# Draws the chart for longest read books
-
-def chartLongestReadBooks():
-    years = [2011, 2012, 2013]
-    id = '5036978'
-
-    for year in years:
-        books = stats.bookReadForTheLongestInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id))
-        books_list = list(books.values())
-        innerlist = list(books_list[0].values())
-        longestReadBooks.append([books_list[1], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
-    print(longestReadBooks)
-
-
-
-
-
-# Draws a graph of the books that took the longest to read
-def booksLongestRead():
-    daysRead = [28, 189, 306, 136, 1311, 27, 71]
-    years = [2011, 2012, 2013, 2014, 2015, 2016, 2017]
-    titles = [
-                        'Life of Pi',
-                        'Venuse delta',
-                        'Kadunud vaated',
-                        'Holy Sh*t: A Brief History of Swearing',
-                        'The Inimitable Jeeves (Jeeves, #2)',
-                        'Peopleware: Productive Projects and Teams',
-                        'Poésie du gérondif'
-                        ]
-
+# Draws a graph of the books that took the longest to finish
+# Doesn't display titles and displays years as floats
+def longestReadBooks(days, years):
     fig = plt.figure()
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
 
-    ax1.set_title("Books that took the longest to read\n")
-    ax1.set_ylabel('Days spent reading')
+    ax1.set_title("Longest read books\n")
+    ax1.set_ylabel('Days')
     ax1.set_xlabel('Year finished')
 
-    plt.plot(years, daysRead, 'ro')
-    plt.axis([2010, 2018, 0, 1500])
+    plt.plot(years, days, linestyle="dashed", marker="o", color="green")
+    plt.axis([min(years)-1, max(years)+1, 0, max(days)*1.2])
+    plt.grid(True)
 
-    for x in range(0, len(daysRead)):
-        plt.annotate((titles[x] + ' (' + str(daysRead[x]) + ')'),xy=(years[x], daysRead[x]), arrowprops=dict(arrowstyle='->'), xytext=(years[x]-1, daysRead[x]+100))
+    for x in range(0, len(days)):
+        plt.annotate((str(days[x])), xy=(years[x], days[x]),xytext=(years[x]-0.5, days[x]-0.5))
 
     plt.show()
 
 
-count = [3.09, 3.65, 2.79, 3.36, 3.56, 3.41, 3.67]
-years = [2011, 2012, 2013, 2014, 2015, 2016, 2017]
+# Draws the graph that shows how many pages were read in a given year
+# Displays years as floats
+def totalPagesRead(count, years):
 
+    fig = plt.figure()
+    ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    ax1.set_title("Pages read\n")
+    ax1.set_ylabel('Pages')
+    ax1.set_xlabel('Year')
+
+    plt.plot(years, count, linestyle="dashed", marker="o", color="green")
+    plt.axis([min(years)-1, max(years)+1, 0, max(count)*1.2])
+    plt.grid(True)
+
+    for x in range(0, len(count)):
+        plt.annotate((str(count[x])), xy=(years[x], count[x]),xytext=(years[x]-0.5, count[x]-0.5))
+
+    plt.show()
+
+
+# Draws the graph that shows how many pages were read on an average day
+# Displays years as floats
+def averageNumberOfPages(count, years):
+    fig = plt.figure()
+    ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
+
+    ax1.set_title("Pages read per day\n")
+    ax1.set_ylabel('Count')
+    ax1.set_xlabel('Year')
+
+    plt.plot(years, count, linestyle="dashed", marker="o", color="green")
+    plt.axis([min(years)-1, max(years)+1, 0, max(count)*1.2])
+    plt.grid(True)
+
+    for x in range(0, len(count)):
+        plt.annotate(('{0:.2f}'.format(count[x])), xy=(years[x], count[x]),xytext=(years[x]-0.5, count[x]-0.5))
+
+    plt.show()
 
 
 # Draws the graph that shows the biggest number of ratings a book read given year has
-# Displays years as floats
+# Doesn't display titles and displays years as floats
 def mostPopularBooks(count, years):
 
     fig = plt.figure()
@@ -77,7 +86,7 @@ def mostPopularBooks(count, years):
 
 
 # Draws the graph that shows the smallest number of ratings a book read given year has
-# Displays years as floats
+# Doesn't display titles and displays years as floats
 def leastPopularBooks(count, years):
 
     fig = plt.figure()
@@ -109,7 +118,7 @@ def averageNumberOfRatings(count, years):
     ax1.set_xlabel('Year finished')
 
     plt.plot(years, count, linestyle="dashed", marker="o", color="green")
-    plt.axis([min(years)-1, max(years)+1, 0, max(count)+1000])
+    plt.axis([min(years)-1, max(years)+1, 0, max(count)*1.2])
     plt.grid(True)
 
     for x in range(0, len(count)):

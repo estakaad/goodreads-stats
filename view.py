@@ -55,31 +55,40 @@ def displayQuestions():
 
 def displayLongestReadBooks(years, id):
     x = prettytable.PrettyTable(['Days read', 'Title', 'Author', 'Started', 'Finished'])
+    days = []
     x.align = 'l'
     for year in years:
         books = stats.bookReadForTheLongestInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id))
         books_list = list(books.values())
         innerlist = list(books_list[0].values())
         x.add_row([books_list[1], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+        days.append(books_list[1])
     print(x)
+    charts.longestReadBooks(days, years)
 
 
 def displayTotalPages(years, id):
     x = prettytable.PrettyTable(['Pages', 'Year'])
     x.align = 'l'
+    count = []
     for year in years:
         pages = stats.totalPagesReadGivenYear(getbooks.getBooksFromShelfGivenYear(year, id))
         x.add_row([pages, year])
+        count.append(int(pages))
     print(x)
+    charts.totalPagesRead(count, years)
 
 
 def displayAveragePagesPerDay(years, id):
     x = prettytable.PrettyTable(['Pages per day', 'Year'])
+    count = []
     x.align = 'l'
     for year in years:
         pages = stats.averageNumberOfPagesReadInDay(getbooks.getBooksFromShelfGivenYear(year, id), year)
         x.add_row(['{0:.2f}'.format(pages), year])
+        count.append(pages)
     print(x)
+    charts.averageNumberOfPages(count, years)
 
 
 def displayMostPopularBooks(years, id):
