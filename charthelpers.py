@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.ticker
 import charts
+from datetime import datetime
+
 
 # Helper function for force displaying of integers instead of floats as ticks
 def displayIntegersAsTicks():
@@ -12,7 +14,7 @@ def displayIntegersAsTicks():
 
 # Stuff that is common in all charts
 def commonChartSettings(y, x, r):
-    fig = plt.figure()
+    fig = plt.figure(figsize=(19,10))
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
     displayIntegersAsTicks()
     plt.grid(True)
@@ -42,3 +44,7 @@ def displayFloatIntAnnotations(z, y):
 def displayFloatIntStrAnnotations(z, y, q):
     for x in range(0, len(z)):
         plt.annotate((str(z[x]) + '\n ("' + q[x] + '")'), xy=(y[x], z[x]),xytext=(y[x]-0.25, z[x]-0.5))
+
+
+def saveAsImage(filename):
+    plt.savefig('books/' + datetime.now().strftime("%Y%m%d-%H%M%S") + filename + '.png')

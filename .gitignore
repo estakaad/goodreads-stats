@@ -104,4 +104,5 @@ venv-py3
 config.ini
 books.txt
 *.txt
+/books
 !requirements.txt

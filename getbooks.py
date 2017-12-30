@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 import pickle
 import view
+import os
 
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -111,7 +112,9 @@ def getAllBooksOnShelf(userId):
 
 # Saves dictionary to file
 def serializeBooks(books, userId):
-    f = open((userId + '.txt'), 'wb')
+    filename = 'books/'+ userId + '.txt'
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    f = open(filename, 'wb')
     pickle.dump(books, f)
     f.close()
 
@@ -130,11 +133,12 @@ def deserializeBooks(file):
 # In case it doesn't exist, a GET request is made instead. After a GET request,
 # the results are serialized.
 def loadFromFileOrFetchNewDataAndSerialize(userId, fromFile):
+    filename = 'books/'+ userId + '.txt'
     books = {}
 
     if fromFile:
         try:
-            books = deserializeBooks(userId + '.txt')
+            books = deserializeBooks(filename)
         except IOError:
             print('File does not appear to exist. Trying get books from Goodreads instead...')
             books = getAllBooksOnShelf(userId)

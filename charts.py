@@ -4,7 +4,6 @@ import getbooks
 import view
 import charthelpers as ch
 
-
 # Draws a line chart of the books that took the longest to finish.
 def longestReadBooks(days, years, titles):
     r = False
@@ -14,8 +13,7 @@ def longestReadBooks(days, years, titles):
     ax1.set_xlabel('Year finished')
 
     ch.displayIntIntStrAnnotations(days, years, titles)
-
-    plt.show()
+    ch.saveAsImage('_longest_read_books')
 
 
 # Draws a line chart showing how many pages were read in a given year.
@@ -27,8 +25,7 @@ def totalPagesRead(count, years):
     ax1.set_xlabel('Year')
 
     ch.displayIntAndIntAnnotations(count, years)
-
-    plt.show()
+    ch.saveAsImage('_total_pages_read')
 
 
 # Draws a line chart showing how many pages were read on an average day.
@@ -40,8 +37,7 @@ def averageNumberOfPages(count, years):
     ax1.set_xlabel('Year')
 
     ch.displayFloatIntAnnotations(count, years)
-
-    plt.show()
+    ch.saveAsImage('_average_num_pages_per_day')
 
 
 # Draws a line chart showing the most popular books read.
@@ -54,8 +50,7 @@ def mostPopularBooks(count, years, titles):
     ax1.set_xlabel('Year finished')
 
     ch.displayIntIntStrAnnotations(count, years, titles)
-
-    plt.show()
+    ch.saveAsImage('_most_popular_books')
 
 
 # Draws a line chart showing the least popular books read.
@@ -68,8 +63,7 @@ def leastPopularBooks(count, years, titles):
     ax1.set_xlabel('Year finished')
 
     ch.displayIntIntStrAnnotations(count, years, titles)
-
-    plt.show()
+    ch.saveAsImage('_least_popular_books')
 
 
 # Draws a line chart showing the number of ratings a book read in given year had on average.
@@ -81,8 +75,7 @@ def averageNumberOfRatings(count, years):
     ax1.set_xlabel('Year finished')
 
     ch.displayFloatIntAnnotations(count, years)
-
-    plt.show()
+    ch.saveAsImage('_average_number_of_ratings')
 
 
 # Draws a line chart of worst books read.
@@ -95,8 +88,7 @@ def worstBooks(ratings, years, titles):
     ax1.set_xlabel('Year finished')
 
     ch.displayFloatIntStrAnnotations(ratings, years, titles)
-
-    plt.show()
+    ch.saveAsImage('_worst_books')
 
 
 # Draws a line chart of best books read.
@@ -109,8 +101,7 @@ def bestBooks(ratings, years, titles):
     ax1.set_xlabel('Year finished')
 
     ch.displayFloatIntStrAnnotations(ratings, years, titles)
-
-    plt.show()
+    ch.saveAsImage('_best_books')
 
 
 # Draws a line graph of average rating of read books.
@@ -122,5 +113,5 @@ def averageRating(ratings, years):
     ax1.set_xlabel('Year finished')
 
     ch.displayFloatIntAnnotations(ratings, years)
+    ch.saveAsImage('_average_rating')
 
-    plt.show()
