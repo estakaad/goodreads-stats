@@ -105,4 +105,5 @@ config.ini
 books.txt
 *.txt
 /books
+/images
 !requirements.txt

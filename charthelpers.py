@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker
 import charts
 from datetime import datetime
+import os
 
 
 # Helper function for force displaying of integers instead of floats as ticks
@@ -47,4 +48,6 @@ def displayFloatIntStrAnnotations(z, y, q):
 
 
 def saveAsImage(filename):
-    plt.savefig('books/' + datetime.now().strftime("%Y%m%d-%H%M%S") + filename + '.png')
+    f = 'images/'+ filename + '.png'
+    os.makedirs(os.path.dirname(f), exist_ok=True)
+    plt.savefig('images/' + datetime.now().strftime("%Y%m%d-%H%M%S") + filename + '.png')
