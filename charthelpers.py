@@ -19,6 +19,7 @@ def commonChartSettings(y, x, r):
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
     displayIntegersAsTicks()
     plt.grid(True)
+    plt.style.use('ggplot')
     plt.plot(x, y, linestyle="dashed", marker="o", color="green")
     if r:
         plt.axis([min(x)-1, max(x)+1, 0, 5])
@@ -34,7 +35,10 @@ def displayIntAndIntAnnotations(y, z):
 
 def displayIntIntStrAnnotations(q, y, z):
     for x in range(0, len(q)):
-        plt.annotate((str(q[x]) + '\n ("' + z[x] + '")'), xy=(y[x], q[x]),xytext=(y[x]-0.25, q[x]+0.7))
+        if z[x] != '-':
+            plt.annotate((str(q[x]) + '\n ("' + z[x] + '")'), xy=(y[x], q[x]),xytext=(y[x]-0.25, q[x]+0.7))
+        else:
+            plt.annotate((str(q[x])), xy=(y[x], q[x]),xytext=(y[x]-0.25, q[x]+0.7))
 
 
 def displayFloatIntAnnotations(z, y):
@@ -44,7 +48,10 @@ def displayFloatIntAnnotations(z, y):
 
 def displayFloatIntStrAnnotations(z, y, q):
     for x in range(0, len(z)):
-        plt.annotate((str(z[x]) + '\n ("' + q[x] + '")'), xy=(y[x], z[x]),xytext=(y[x]-0.25, z[x]-0.5))
+        if q[x] != '-':
+            plt.annotate((str(z[x]) + '\n ("' + q[x] + '")'), xy=(y[x], z[x]),xytext=(y[x]-0.25, z[x]-0.5))
+        else:
+            plt.annotate((str(z[x])), xy=(y[x], z[x]),xytext=(y[x]-0.25, z[x]-0.5))
 
 
 def saveAsImage(filename):
