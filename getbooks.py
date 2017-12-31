@@ -5,6 +5,7 @@ from datetime import datetime
 import pickle
 import view
 import os
+import json
 
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -112,18 +113,18 @@ def getAllBooksOnShelf(userId):
 
 # Saves dictionary to file
 def serializeBooks(books, userId):
-    filename = 'books/'+ userId + '.txt'
+    filename = 'books/'+ userId + '.json'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-    f = open(filename, 'wb')
-    pickle.dump(books, f)
-    f.close()
+
+    with open(filename, 'w') as outfile:
+        json.dump(books, outfile, indent=4)
+    outfile.close()
 
 
 # Reads dictionary from file
 def deserializeBooks(file):
-    f = open(file, 'rb')
-    dict = pickle.load(f)
-    f.close()
+    with open(file) as json_file:
+        dict = json.load(json_file)
     return dict
 
 

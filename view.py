@@ -71,6 +71,10 @@ def askLoadingFromFile():
     return False
 
 
+def getDataForChart():
+    return
+
+
 def displayLongestReadBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Days read', 'Title', 'Author', 'Started', 'Finished'])
     days = []
@@ -216,15 +220,3 @@ def displayAverageRating(years, id, fromFile):
     print('AVERAGE RATING OF BOOKS READ')
     print(x)
     charts.averageRating(ratings, years)
-
-
-def displayAllStats(years, id, fromFile):
-    displayLongestReadBooks(years, id, fromFile)
-    displayTotalPages(years, id, fromFile)
-    displayAveragePagesPerDay(years, id, fromFile)
-    displayMostPopularBooks(years, id, fromFile)
-    displayLeastPopularBooks(years, id, fromFile)
-    displayAverageNumberOfRatings(years, id, fromFile)
-    displayWorstBooks(years, id, fromFile)
-    displayBestBooks(years, id, fromFile)
-    displayAverageRating(years, id, fromFile)
