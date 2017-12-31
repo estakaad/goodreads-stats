@@ -34,7 +34,7 @@ def displayIntAndIntAnnotations(y, z):
 
 def displayIntIntStrAnnotations(q, y, z):
     for x in range(0, len(q)):
-        plt.annotate((str(q[x]) + '\n ("' + z[x] + '")'), xy=(y[x], q[x]),xytext=(y[x]+0.25, q[x]-0.5))
+        plt.annotate((str(q[x]) + '\n ("' + z[x] + '")'), xy=(y[x], q[x]),xytext=(y[x]-0.25, q[x]+0.7))
 
 
 def displayFloatIntAnnotations(z, y):
