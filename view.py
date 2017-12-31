@@ -51,7 +51,9 @@ def displayQuestions():
                  ['g', 'What was the worst book I read in year x?'],
                  ['h', 'What was the best book I read in year x?'],
                  ['i', 'How good was the average book I read in year x?'],
-                 ['j', 'Show me all the answers!']
+                 ['j', 'Is there a correlation between days spent reading a book and the number of pages?'],
+                 ['k', 'Is there a correlation between days spent reading a book and the book\'s average rating?'],
+                 ['l', 'Show me all the answers!']
                 ]
 
     for question in questions:
@@ -245,3 +247,41 @@ def displayAverageRating(years, id, fromFile):
     print('AVERAGE RATING OF BOOKS READ')
     print(x)
     charts.averageRating(ratings, years)
+
+
+def displayDaysReadAndPages(years, id, fromFile):
+    x = prettytable.PrettyTable(['Days read', 'Pages'])
+    x.align = 'l'
+    days = []
+    pages = []
+    for year in years:
+        data = stats.daysReadAndPages(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
+        daysAndPages = list(data.values())
+        for d in daysAndPages:
+            if (d['days'] and d['pages']) != '-':
+                x.add_row([d['days'], d['pages']])
+                days.append(d['days'])
+                pages.append(d['pages'])
+    print('')
+    print('DAYS SPENT READING X PAGES')
+    print(x)
+    charts.daysReadAndRatings(days, pages)
+
+
+def displayRatingsAndDaysRead(years, id, fromFile):
+    x = prettytable.PrettyTable(['Days read', 'Ratings'])
+    x.align = 'l'
+    days = []
+    ratings = []
+    for year in years:
+        data = stats.daysReadAndRatings(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
+        daysAndRatings = list(data.values())
+        for d in daysAndRatings:
+            if (d['days'] and d['rating']) != '-':
+                x.add_row([d['days'], d['rating']])
+                days.append(d['days'])
+                ratings.append(round(float(d['rating']),1))
+    print('')
+    print('DAYS SPENT READING BOOKS WITH RATING X')
+    print(x)
+    charts.daysReadAndRatings(days, ratings)

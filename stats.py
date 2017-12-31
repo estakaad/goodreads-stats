@@ -150,3 +150,39 @@ def averageRatingOfBook(books):
             break
         except ZeroDivisionError:
             return 0
+
+
+# Returns dictionary of key-value pairs, where keys are days spent reading a book
+# and values are the number of pages.
+def daysReadAndPages(books):
+
+    daysReadAndPages = {}
+    id = 0
+
+    for key, value in books.items():
+        if ((str(value['started_at']) != '-') and (str(value['read_at']) != '-')):
+            dateStarted = datetime.strptime(str(value['started_at']), '%a %b %d %H:%M:%S %z %Y')
+            dateFinished = datetime.strptime(str(value['read_at']), '%a %b %d %H:%M:%S %z %Y')
+            delta = (dateFinished - dateStarted).days + 1
+            id+=1
+            daysReadAndPages[id] = {'days': delta, 'pages': value['num_pages']}
+
+    return daysReadAndPages
+
+
+# Returns dictionary of key-value pairs, where keys are days spent reading a book
+# and values are the books' average ratings.
+def daysReadAndRatings(books):
+
+    daysReadAndRatings = {}
+    id = 0
+
+    for key, value in books.items():
+        if ((str(value['started_at']) != '-') and (str(value['read_at']) != '-')):
+            dateStarted = datetime.strptime(str(value['started_at']), '%a %b %d %H:%M:%S %z %Y')
+            dateFinished = datetime.strptime(str(value['read_at']), '%a %b %d %H:%M:%S %z %Y')
+            delta = (dateFinished - dateStarted).days + 1
+            id+=1
+            daysReadAndRatings[id] = {'days': delta, 'rating': value['average_rating']}
+
+    return daysReadAndRatings

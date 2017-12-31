@@ -14,7 +14,7 @@ def displayIntegersAsTicks():
 
 
 # Stuff that is common in all charts
-def commonChartSettings(y, x, r):
+def commonLineChartSettings(y, x, r):
     fig = plt.figure(figsize=(19,10))
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
     displayIntegersAsTicks()

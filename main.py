@@ -32,6 +32,10 @@ while q != 'q':
     elif q == 'i':
         view.displayAverageRating(years, id, fromFile)
     elif q == 'j':
+        view.displayDaysReadAndPages(years, id, fromFile)
+    elif q == 'k':
+        view.displayRatingsAndDaysRead(years, id, fromFile)
+    elif q == 'l':
         view.displayLongestReadBooks(years, id, fromFile)
         view.displayTotalPages(years, id, fromFile)
         view.displayAveragePagesPerDay(years, id, fromFile)
@@ -41,6 +45,8 @@ while q != 'q':
         view.displayWorstBooks(years, id, fromFile)
         view.displayBestBooks(years, id, fromFile)
         view.displayAverageRating(years, id, fromFile)
+        view.displayDaysReadAndPages(years, id, fromFile)
+        view.displayRatingsAndDaysRead(years, id, fromFile)
     elif q == 'q':
         break
     else:
