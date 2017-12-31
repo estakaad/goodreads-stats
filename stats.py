@@ -88,7 +88,13 @@ def averageNumberOfRatings(books):
         numberOfRatings+=1
         sumOfCountOfRatings += int(value['ratings_count'])
 
-    return sumOfCountOfRatings / numberOfRatings
+    # In case of zero ratings.
+    while True:
+        try:
+            return sumOfCountOfRatings / numberOfRatings
+            break
+        except ZeroDivisionError:
+            return 0
 
 
 # Returns the worst book read in the given year. The worst meaning having

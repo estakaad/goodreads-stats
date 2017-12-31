@@ -82,11 +82,16 @@ def displayLongestReadBooks(years, id, fromFile):
     x.align = 'l'
     for year in years:
         books = stats.bookReadForTheLongestInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
-        books_list = list(books.values())
-        innerlist = list(books_list[0].values())
-        x.add_row([books_list[1], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
-        days.append(books_list[1])
-        titles.append(innerlist[0])
+        if len(books) != 0:
+            books_list = list(books.values())
+            innerlist = list(books_list[0].values())
+            x.add_row([books_list[1], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+            days.append(books_list[1])
+            titles.append(innerlist[0])
+        else:
+            x.add_row(['-', '-', '-', '-', '-'])
+            days.append(0)
+            titles.append('-')
     print('')
     print('BOOKS THAT TOOK THE LONGEST TO FINISH')
     print(x)
@@ -128,11 +133,16 @@ def displayMostPopularBooks(years, id, fromFile):
     x.align = 'l'
     for year in years:
         books = stats.bookWithMostRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
-        books_list = list(books.values())
-        innerlist = list(books_list[0].values())
-        x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
-        count.append(int(innerlist[4]))
-        titles.append(innerlist[0])
+        if len(books) != 0:
+            books_list = list(books.values())
+            innerlist = list(books_list[0].values())
+            x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+            count.append(int(innerlist[4]))
+            titles.append(innerlist[0])
+        else:
+            x.add_row(['-', '-', '-', '-', '-'])
+            count.append(0)
+            titles.append('-')
     print('')
     print('MOST POPULAR BOOKS READ (POPULAR = BOOKS WITH THE HIGHEST NUMBER OF RATINGS)')
     print(x)
@@ -146,11 +156,16 @@ def displayLeastPopularBooks(years, id, fromFile):
     x.align = 'l'
     for year in years:
         books = stats.bookWithLeastRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
-        books_list = list(books.values())
-        innerlist = list(books_list[0].values())
-        x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
-        count.append(int(innerlist[4]))
-        titles.append(innerlist[0])
+        if len(books) != 0:
+            books_list = list(books.values())
+            innerlist = list(books_list[0].values())
+            x.add_row([innerlist[4], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+            count.append(int(innerlist[4]))
+            titles.append(innerlist[0])
+        else:
+            x.add_row(['-', '-', '-', '-', '-'])
+            count.append(0)
+            titles.append('-')
     print('')
     print('LEAST POPULAR BOOKS READ (LEAST POPULAR = BOOKS WITH THE LOWEST NUMBER OF RATINGS)')
     print(x)
@@ -178,11 +193,16 @@ def displayWorstBooks(years, id, fromFile):
     x.align = 'l'
     for year in years:
         books = stats.worstBookRead(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
-        books_list = list(books.values())
-        innerlist = list(books_list[0].values())
-        x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
-        ratings.append(float(innerlist[3]))
-        titles.append(innerlist[0])
+        if len(books) != 0:
+            books_list = list(books.values())
+            innerlist = list(books_list[0].values())
+            x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+            ratings.append(float(innerlist[3]))
+            titles.append(innerlist[0])
+        else:
+            x.add_row(['-', '-', '-', '-', '-'])
+            ratings.append(0)
+            titles.append('-')
     print('')
     print('WORST BOOKS READ')
     print(x)
@@ -196,11 +216,16 @@ def displayBestBooks(years, id, fromFile):
     x.align = 'l'
     for year in years:
         books = stats.bestBookRead(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
-        books_list = list(books.values())
-        innerlist = list(books_list[0].values())
-        x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
-        ratings.append(float(innerlist[3]))
-        titles.append(innerlist[0])
+        if len(books) != 0:
+            books_list = list(books.values())
+            innerlist = list(books_list[0].values())
+            x.add_row([innerlist[3], innerlist[0], innerlist[1], innerlist[5], innerlist[6]])
+            ratings.append(float(innerlist[3]))
+            titles.append(innerlist[0])
+        else:
+            x.add_row(['-', '-', '-', '-', '-'])
+            ratings.append(0)
+            titles.append('-')
     print('')
     print('BEST BOOKS READ')
     print(x)

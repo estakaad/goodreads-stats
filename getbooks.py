@@ -134,7 +134,7 @@ def deserializeBooks(file):
 # In case it doesn't exist, a GET request is made instead. After a GET request,
 # the results are serialized.
 def loadFromFileOrFetchNewDataAndSerialize(userId, fromFile):
-    filename = 'books/'+ userId + '.txt'
+    filename = 'books/'+ userId + '.json'
     books = {}
 
     if fromFile:
