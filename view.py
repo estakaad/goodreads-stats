@@ -63,10 +63,7 @@ def askLoadingFromFile():
 
     return False
 
-
-def getDataForChart():
-    return
-
+allUsersValues = []
 
 def displayLongestReadBooks(years, id, fromFile):
     x = prettytable.PrettyTable(['Days read', 'Title', 'Author', 'Started', 'Finished'])
@@ -91,7 +88,7 @@ def displayLongestReadBooks(years, id, fromFile):
     charts.longestReadBooks(days, years, titles)
 
 
-def displayTotalPages(years, id, fromFile):
+def displayTotalPages(years, id, fromFile, userCount):
     x = prettytable.PrettyTable(['Pages', 'Year'])
     x.align = 'l'
     count = []
@@ -99,10 +96,12 @@ def displayTotalPages(years, id, fromFile):
         pages = stats.totalPagesReadGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
         x.add_row([pages, year])
         count.append(int(pages))
-    print('')
-    print('TOTAL NUMBER OF PAGES READ')
-    print(x)
-    charts.totalPagesRead(count, years)
+    allUsersValues.append(count)
+    if len(allUsersValues) == userCount:
+        charts.totalPagesRead(allUsersValues, years)
+    # print('')
+    # print('TOTAL NUMBER OF PAGES READ')
+    # print(x)
 
 
 def displayAveragePagesPerDay(years, id, fromFile):

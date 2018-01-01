@@ -18,7 +18,7 @@ while q != 'q':
             view.displayLongestReadBooks(years, id, fromFile)
     elif q == 'b':
         for id in ids:
-            view.displayTotalPages(years, id, fromFile)
+            view.displayTotalPages(years, id, fromFile, len(ids))
     elif q == 'c':
         for id in ids:
             view.displayAveragePagesPerDay(years, id, fromFile)
@@ -43,7 +43,7 @@ while q != 'q':
     elif q == 'j':
         for id in ids:
             view.displayLongestReadBooks(years, id, fromFile)
-            view.displayTotalPages(years, id, fromFile)
+            view.displayTotalPages(years, id, fromFile, len(ids))
             view.displayAveragePagesPerDay(years, id, fromFile)
             view.displayMostPopularBooks(years, id, fromFile)
             view.displayLeastPopularBooks(years, id, fromFile)

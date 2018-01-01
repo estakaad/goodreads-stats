@@ -18,13 +18,32 @@ def longestReadBooks(days, years, titles):
 
 # Draws a line chart showing how many pages were read in a given year.
 def totalPagesRead(count, years):
+
     r = False
-    ax1 = ch.commonChartSettings(count, years, r)
+    fig = plt.figure(figsize=(19,10))
+
+    ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
     ax1.set_title("Pages read\n")
     ax1.set_ylabel('Number of pages')
     ax1.set_xlabel('Year')
 
-    ch.displayIntAndIntAnnotations(count, years)
+    ch.displayIntegersAsTicks()
+    plt.grid(True)
+    plt.style.use('ggplot')
+    maxCount = 0
+
+    for oneUserData in count:
+        plt.plot(years, oneUserData, linestyle="dashed", marker="o")
+        for x in oneUserData:
+            if x > maxCount:
+                maxCount = x
+    plt.legend()
+
+    if r:
+        plt.axis([min(years)-1, max(years)+1, 0, 5])
+    else:
+        plt.axis([min(years)-1, max(years)+1, 0, maxCount*1.2])
+
     ch.saveAsImage('_total_pages_read')
 
 
@@ -114,4 +133,5 @@ def averageRating(ratings, years):
 
     ch.displayFloatIntAnnotations(ratings, years)
     ch.saveAsImage('_average_rating')
+
 

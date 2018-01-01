@@ -15,12 +15,17 @@ def displayIntegersAsTicks():
 
 # Stuff that is common in all charts
 def commonChartSettings(y, x, r):
+
     fig = plt.figure(figsize=(19,10))
+
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
     displayIntegersAsTicks()
+
     plt.grid(True)
     plt.style.use('ggplot')
+
     plt.plot(x, y, linestyle="dashed", marker="o", color="green")
+
     if r:
         plt.axis([min(x)-1, max(x)+1, 0, 5])
     else:
