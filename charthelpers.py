@@ -13,23 +13,28 @@ def displayIntegersAsTicks():
     plt.gca().xaxis.set_major_formatter(formatter)
 
 
-# Stuff that is common in all charts
-def commonChartSettings(y, x, r):
-
+# Stuff that is common in all line charts
+def commonChartSettings(axisy, axisx, rating):
     fig = plt.figure(figsize=(19,10))
 
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
-    displayIntegersAsTicks()
-
     plt.grid(True)
     plt.style.use('ggplot')
 
-    plt.plot(x, y, linestyle="dashed", marker="o", color="green")
+    maxCount = 0
 
-    if r:
-        plt.axis([min(x)-1, max(x)+1, 0, 5])
+    for oneUserData in axisy:
+        plt.plot(axisx, oneUserData, linestyle="dashed", marker="o")
+        for x in oneUserData:
+            if x > maxCount:
+                maxCount = x
+
+    plt.legend()
+
+    if rating:
+        plt.axis([min(axisx)-1, max(axisx)+1, 0, 5])
     else:
-        plt.axis([min(x)-1, max(x)+1, 0, max(y)*1.2])
+        plt.axis([min(axisx)-1, max(axisx)+1, 0, maxCount*1.2])
 
     return ax1
 
