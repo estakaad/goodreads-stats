@@ -5,15 +5,14 @@ import view
 import charthelpers as ch
 
 # Draws a line chart of the books that took the longest to finish.
-def longestReadBooks(days, years):
-    print(days)
+def longestReadBooks(days, years, usernames):
     r = False
 
-    ax1 = ch.commonChartSettings(days, years, r)
+    ax1 = ch.commonChartSettings(days, years, r, usernames)
     ax1.set_title("Books that took the longest to read\n")
     ax1.set_ylabel('Days')
     ax1.set_xlabel('Year finished')
-    #ch.displayIntIntStrAnnotations(days, years, titles)
+    #ch.displayIntIntStrAnnotations(days, years)
     ch.displayIntegersAsTicks()
     ch.saveAsImage('_longest_read_books')
 

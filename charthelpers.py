@@ -14,7 +14,7 @@ def displayIntegersAsTicks():
 
 
 # Stuff that is common in all line charts
-def commonChartSettings(axisy, axisx, rating):
+def commonChartSettings(axisy, axisx, rating, usernames):
     fig = plt.figure(figsize=(19,10))
 
     ax1 = fig.add_axes((0.1,0.1,0.8,0.8))
@@ -24,7 +24,7 @@ def commonChartSettings(axisy, axisx, rating):
     maxCount = 0
 
     for oneUserData in axisy:
-        plt.plot(axisx, oneUserData, linestyle="dashed", marker="o")
+        plt.plot(axisx, oneUserData, linestyle="dashed", marker="o", label=usernames[axisy.index(oneUserData)])
         for x in oneUserData:
             if x > maxCount:
                 maxCount = x
@@ -43,12 +43,12 @@ def displayIntAndIntAnnotations(y, z):
         plt.annotate((str(y[x])), xy=(z[x], y[x]),xytext=(z[x]+0.25, y[x]-0.5))
 
 
-def displayIntIntStrAnnotations(q, y, z):
-    for x in range(0, len(q)):
-        if z[x] != '-':
-            plt.annotate((str(q[x]) + '\n ("' + z[x] + '")'), xy=(y[x], q[x]),xytext=(y[x]-0.25, q[x]+0.7))
+def displayIntIntStrAnnotations(axisXInt, axisYInt, string):
+    for x in range(0, len(axisXInt)):
+        if string[x] != '-':
+            plt.annotate((str(axisXInt[x]) + '\n ("' + string[x] + '")'), xy=(axisYInt[x], axisXInt[x]),xytext=(axisYInt[x]-0.25, axisXInt[x]+0.7))
         else:
-            plt.annotate((str(q[x])), xy=(y[x], q[x]),xytext=(y[x]-0.25, q[x]+0.7))
+            plt.annotate((str(axisXInt[x])), xy=(axisYInt[x], axisXInt[x]),xytext=(axisYInt[x]-0.25, axisXInt[x]+0.7))
 
 
 def displayFloatIntAnnotations(z, y):

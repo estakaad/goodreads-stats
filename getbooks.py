@@ -52,8 +52,20 @@ def getBooksOnPage(userId, page):
     return ET.fromstring(r.content)
 
 
+# GET request to get user info
+def getUserInfo(userId):
+
+    key = configSectionMap("SectionOne")['key']
+    r = requests.get('https://www.goodreads.com/user/show/' + str(userId) + '.xml?key=' + key)
+
+    return ET.fromstring(r.content)
+
+
 # Returns a dictionary of all the books on a user's Goodreads read-shelf.
 def getAllBooksOnShelf(userId):
+
+    r = getUserInfo(userId)
+    userName = r[1][1].text
 
     books = {}
     nthBookOnPage = 0
@@ -101,6 +113,11 @@ def getAllBooksOnShelf(userId):
                 books[review[0].text]['read_at'] = '-'
             else:
                 books[review[0].text]['read_at'] = review[10].text
+
+            if userName is None:
+                books[review[0].text]['username'] = ''
+            else:
+                books[review[0].text]['username'] = userName
 
             if nthBookOnPage != numberOfBooksOnPage:
                 continue
