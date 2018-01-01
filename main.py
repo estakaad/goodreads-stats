@@ -43,13 +43,21 @@ while q != 'q':
     elif q == 'j':
         for id in ids:
             view.displayLongestReadBooks(years, id, fromFile, len(ids))
+        for id in ids:
             view.displayTotalPages(years, id, fromFile, len(ids))
+        for id in ids:
             view.displayAveragePagesPerDay(years, id, fromFile, len(ids))
+        for id in ids:
             view.displayMostPopularBooks(years, id, fromFile, len(ids))
+        for id in ids:
             view.displayLeastPopularBooks(years, id, fromFile, len(ids))
+        for id in ids:
             view.displayAverageNumberOfRatings(years, id, fromFile, len(ids))
+        for id in ids:
             view.displayWorstBooks(years, id, fromFile, len(ids))
+        for id in ids:
             view.displayBestBooks(years, id, fromFile, len(ids))
+        for id in ids:
             view.displayAverageRating(years, id, fromFile, len(ids))
     elif q == 'q':
         break
