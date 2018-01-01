@@ -35,13 +35,13 @@ def getBooksOnPage(userId, page):
     per_page = str(configSectionMap("SectionOne")['per_page'])
 
     r = requests.get('https://www.goodreads.com/review/list/' \
-        + userId \
+        + str(userId) \
         + '.xml?key=' \
         + key \
         + '&v=' \
         + v \
         + '&id=' \
-        + userId \
+        + str(userId) \
         + '&shelf=' \
         + shelf \
         + '&page=' \
@@ -113,7 +113,7 @@ def getAllBooksOnShelf(userId):
 
 # Saves dictionary to file
 def serializeBooks(books, userId):
-    filename = 'books/'+ userId + '.json'
+    filename = 'books/'+ str(userId) + '.json'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
 
     with open(filename, 'w') as outfile:
@@ -134,7 +134,7 @@ def deserializeBooks(file):
 # In case it doesn't exist, a GET request is made instead. After a GET request,
 # the results are serialized.
 def loadFromFileOrFetchNewDataAndSerialize(userId, fromFile):
-    filename = 'books/'+ userId + '.json'
+    filename = 'books/'+ str(userId) + '.json'
     books = {}
 
     if fromFile:

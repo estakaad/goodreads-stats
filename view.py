@@ -5,22 +5,15 @@ import prettytable
 import charts
 
 def askForId():
-    regex = r'^\d+$'
 
     while True:
         try:
-            id = str(input("\nPlease enter Goodread\'s user ID\n "))
+            ids = [int(x) for x in input('\nEnter Goodreads\' users\' ID\'s separated by spaces.\n').split()]
+            break
         except ValueError:
             print("Sorry, I didn't understand that.")
             continue
-
-        if re.search(regex, id):
-          break
-        else:
-          print('Goodread\'s user ID must only contain non negative numbers.\n')
-          continue
-
-    return id
+    return ids
 
 
 def askForYears():
