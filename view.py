@@ -67,12 +67,27 @@ def askLoadingFromFile():
     return False
 
 
+def addUserNameAndOtherValuesToList(userNames, count, userCount, years, createChart):
+
+    for userName in userNames:
+        if userName == '':
+            userNames.remove(userName)
+    userNames = list(set(userNames))
+
+    allUsersValues.append(count)
+    allUserNames.append(userNames)
+
+    if len(allUsersValues) == userCount:
+        createChart(allUsersValues, years, allUserNames)
+        allUsersValues.clear()
+        allUserNames.clear()
+
+
 def displayLongestReadBooks(years, id, fromFile, userCount):
 
     x = prettytable.PrettyTable(['Days read', 'Title', 'Author', 'Started', 'Finished'])
     days = []
     titles = []
-    userNames = []
     x.align = 'l'
 
     for year in years:
@@ -87,18 +102,15 @@ def displayLongestReadBooks(years, id, fromFile, userCount):
             x.add_row(['-', '-', '-', '-', '-'])
             days.append(0)
             titles.append('-')
-        #userNames.append(innerlist[7])
 
     allUsersValues.append(days)
-    allUserNames.append(innerlist[7])
 
     print('BOOKS THAT TOOK THE LONGEST TO FINISH')
     print(x)
 
     if len(allUsersValues) == userCount:
-        charts.longestReadBooks(allUsersValues, years, allUserNames)
+        charts.longestReadBooks(allUsersValues, years)
         allUsersValues.clear()
-        allUserNames.clear()
 
 
 def displayTotalPages(years, id, fromFile, userCount):
@@ -106,19 +118,17 @@ def displayTotalPages(years, id, fromFile, userCount):
     x = prettytable.PrettyTable(['Pages', 'Year'])
     x.align = 'l'
     count = []
+    userNames = []
     for year in years:
-        pages = stats.totalPagesReadGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
-        x.add_row([pages, year])
-        count.append(int(pages))
-
-    allUsersValues.append(count)
+        usersPages = stats.totalPagesReadGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
+        x.add_row([usersPages[0], year])
+        count.append(int(usersPages[0]))
+        userNames.append(usersPages[1])
 
     print('TOTAL NUMBER OF PAGES READ')
     print(x)
 
-    if len(allUsersValues) == userCount:
-        charts.totalPagesRead(allUsersValues, years)
-        allUsersValues.clear()
+    addUserNameAndOtherValuesToList(userNames, count, userCount, years, charts.totalPagesRead)
 
 
 def displayAveragePagesPerDay(years, id, fromFile, userCount):
@@ -141,12 +151,12 @@ def displayAveragePagesPerDay(years, id, fromFile, userCount):
         allUsersValues.clear()
 
 
-
 def displayMostPopularBooks(years, id, fromFile, userCount):
 
     x = prettytable.PrettyTable(['Number of ratings', 'Title', 'Author', 'Started', 'Finished'])
     count = []
     titles = []
+    userNames = []
     x.align = 'l'
     for year in years:
         books = stats.bookWithMostRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
@@ -162,13 +172,15 @@ def displayMostPopularBooks(years, id, fromFile, userCount):
             titles.append('-')
 
     allUsersValues.append(count)
+    allUserNames.append(innerlist[7])
 
     print('MOST POPULAR BOOKS READ (POPULAR = BOOKS WITH THE HIGHEST NUMBER OF RATINGS)')
     print(x)
 
     if len(allUsersValues) == userCount:
-        charts.mostPopularBooks(allUsersValues, years)
+        charts.mostPopularBooks(allUsersValues, years, allUserNames)
         allUsersValues.clear()
+        allUserNames.clear()
 
 
 def displayLeastPopularBooks(years, id, fromFile, userCount):
@@ -176,6 +188,7 @@ def displayLeastPopularBooks(years, id, fromFile, userCount):
     x = prettytable.PrettyTable(['Number of ratings', 'Title', 'Author', 'Started', 'Finished'])
     count = []
     titles = []
+    usernames = []
     x.align = 'l'
     for year in years:
         books = stats.bookWithLeastRatingsInGivenYear(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
@@ -191,19 +204,22 @@ def displayLeastPopularBooks(years, id, fromFile, userCount):
             titles.append('-')
 
     allUsersValues.append(count)
+    allUserNames.append(innerlist[7])
 
     print('LEAST POPULAR BOOKS READ (LEAST POPULAR = BOOKS WITH THE LOWEST NUMBER OF RATINGS)')
     print(x)
 
     if len(allUsersValues) == userCount:
-        charts.leastPopularBooks(allUsersValues, years)
+        charts.leastPopularBooks(allUsersValues, years, allUserNames)
         allUsersValues.clear()
+        allUserNames.clear()
 
 
 def displayAverageNumberOfRatings(years, id, fromFile, userCount):
 
     x = prettytable.PrettyTable(['Average ratings count', 'Year'])
     count = []
+    #usernames = []
     x.align = 'l'
     for year in years:
         ratings = stats.averageNumberOfRatings(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
@@ -211,6 +227,7 @@ def displayAverageNumberOfRatings(years, id, fromFile, userCount):
         count.append(ratings)
 
     allUsersValues.append(count)
+    #allUserNames.append()
 
     print('AVERAGE NUMBER OF RATINGS OF BOOKS READ')
     print(x)
@@ -225,6 +242,7 @@ def displayWorstBooks(years, id, fromFile, userCount):
     x = prettytable.PrettyTable(['Rating', 'Title', 'Author', 'Started', 'Finished'])
     ratings = []
     titles = []
+    userNames = []
     x.align = 'l'
     for year in years:
         books = stats.worstBookRead(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
@@ -238,15 +256,12 @@ def displayWorstBooks(years, id, fromFile, userCount):
             x.add_row(['-', '-', '-', '-', '-'])
             ratings.append(0)
             titles.append('-')
-
-    allUsersValues.append(ratings)
+        userNames.append(innerlist[7])
 
     print('WORST BOOKS READ')
     print(x)
 
-    if len(allUsersValues) == userCount:
-        charts.worstBooks(allUsersValues, years)
-        allUsersValues.clear()
+    addUserNameAndOtherValuesToList(userNames, ratings, userCount, years, charts.worstBooks)
 
 
 def displayBestBooks(years, id, fromFile, userCount):
@@ -254,6 +269,7 @@ def displayBestBooks(years, id, fromFile, userCount):
     x = prettytable.PrettyTable(['Rating', 'Title', 'Author', 'Started', 'Finished'])
     ratings = []
     titles = []
+    userNames = []
     x.align = 'l'
     for year in years:
         books = stats.bestBookRead(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
@@ -267,15 +283,12 @@ def displayBestBooks(years, id, fromFile, userCount):
             x.add_row(['-', '-', '-', '-', '-'])
             ratings.append(0)
             titles.append('-')
-
-    allUsersValues.append(ratings)
+        userNames.append(innerlist[7])
 
     print('BEST BOOKS READ')
     print(x)
 
-    if len(allUsersValues) == userCount:
-        charts.bestBooks(allUsersValues, years)
-        allUsersValues.clear()
+    addUserNameAndOtherValuesToList(userNames, ratings, userCount, years, charts.bestBooks)
 
 
 def displayAverageRating(years, id, fromFile, userCount):

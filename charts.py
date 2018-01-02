@@ -18,10 +18,10 @@ def longestReadBooks(days, years, usernames):
 
 
 # Draws a line chart showing how many pages were read in a given year.
-def totalPagesRead(count, years):
+def totalPagesRead(count, years, usernames):
     r = False
 
-    ax1 = ch.commonChartSettings(count, years, r)
+    ax1 = ch.commonChartSettings(count, years, r, usernames)
     ax1.set_title("Pages read\n")
     ax1.set_ylabel('Number of pages')
     ax1.set_xlabel('Year')
@@ -45,25 +45,25 @@ def averageNumberOfPages(count, years):
 
 # Draws a line chart showing the most popular books read.
 # Most popular here means having the highest number of ratings on Goodreads.
-def mostPopularBooks(count, years):
+def mostPopularBooks(count, years, usernames):
     r = False
 
-    ax1 = ch.commonChartSettings(count, years, r)
+    ax1 = ch.commonChartSettings(count, years, r, usernames)
     ax1.set_title("Most popular books read\n")
     ax1.set_ylabel('Number of ratings')
     ax1.set_xlabel('Year finished')
 
-    #ch.displayIntIntStrAnnotations(count, years, titles)
+    #ch.displayIntIntStrAnnotations(count, years)
     ch.displayIntegersAsTicks()
     ch.saveAsImage('_most_popular_books')
 
 
 # Draws a line chart showing the least popular books read.
 # Least popular here means having the lowest number of ratings on Goodreads.
-def leastPopularBooks(count, years):
+def leastPopularBooks(count, years, usernames):
     r = False
 
-    ax1 = ch.commonChartSettings(count, years, r)
+    ax1 = ch.commonChartSettings(count, years, r, usernames)
     ax1.set_title("Least popular books read\n")
     ax1.set_ylabel('Number of ratings')
     ax1.set_xlabel('Year finished')
@@ -73,10 +73,10 @@ def leastPopularBooks(count, years):
 
 
 # Draws a line chart showing the number of ratings a book read in given year had on average.
-def averageNumberOfRatings(count, years):
+def averageNumberOfRatings(count, years, usernames):
     r = False
 
-    ax1 = ch.commonChartSettings(count, years, r)
+    ax1 = ch.commonChartSettings(count, years, r, usernames)
     ax1.set_title("Average count of ratings\n")
     ax1.set_ylabel('Count')
     ax1.set_xlabel('Year finished')
@@ -88,10 +88,10 @@ def averageNumberOfRatings(count, years):
 
 # Draws a line chart of worst books read.
 # Worst here means having the lowest rating on Goodreads.
-def worstBooks(ratings, years):
+def worstBooks(ratings, years, usernames):
     r = True
 
-    ax1 = ch.commonChartSettings(ratings, years, r)
+    ax1 = ch.commonChartSettings(ratings, years, r, usernames)
     ax1.set_title("Worst books read\n")
     ax1.set_ylabel('Rating')
     ax1.set_xlabel('Year finished')
@@ -103,10 +103,10 @@ def worstBooks(ratings, years):
 
 # Draws a line chart of best books read.
 # Best here means having the highest rating on Goodreads.
-def bestBooks(ratings, years):
+def bestBooks(ratings, years, usernames):
     r = True
 
-    ax1 = ch.commonChartSettings(ratings, years, r)
+    ax1 = ch.commonChartSettings(ratings, years, r, usernames)
     ax1.set_title("Best books read\n")
     ax1.set_ylabel('Rating')
     ax1.set_xlabel('Year finished')

@@ -31,12 +31,20 @@ def bookReadForTheLongestInGivenYear(books):
 def totalPagesReadGivenYear(books):
 
     totalPagesPerYear = 0
+    userName = ''
+    usersPages = []
 
     for key, value in books.items():
         if value['num_pages'] != '-':
             totalPagesPerYear+=int(value['num_pages'])
+        else:
+            totalPagesPerYear+=0
+        userName = value['username']
 
-    return totalPagesPerYear
+    usersPages.append(totalPagesPerYear)
+    usersPages.append(userName)
+
+    return usersPages
 
 
 # Returns average number of pages read per day in the given year.
