@@ -43,7 +43,7 @@ def totalPagesReadGivenYear(books):
 
     usersPages.append(totalPagesPerYear)
     usersPages.append(userName)
-
+    print(usersPages)
     return usersPages
 
 
@@ -145,16 +145,20 @@ def averageRatingOfBook(books):
 
     numberOfRatings = 0
     sumOfRatings = 0
+    userName = ''
+    usersAverageRating = []
 
     for key, value in books.items():
         if int(value['ratings_count']) >= 15:
             sumOfRatings+=float(value['average_rating'])
             numberOfRatings+=1
+        userName = value['username']
 
-    # In case of zero ratings.
-    while True:
-        try:
-            return sumOfRatings / numberOfRatings
-            break
-        except ZeroDivisionError:
-            return 0
+    if numberOfRatings != 0:
+        usersAverageRating.append(sumOfRatings / numberOfRatings)
+    else:
+        usersAverageRating.append(0)
+
+    usersAverageRating.append(userName)
+
+    return usersAverageRating

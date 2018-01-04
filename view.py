@@ -105,14 +105,8 @@ def displayLongestReadBooks(years, id, fromFile, userCount):
             titles.append('-')
         userNames.append(innerlist[7])
 
-    #allUsersValues.append(days)
-
     print('BOOKS THAT TOOK THE LONGEST TO FINISH')
     print(x)
-
-    # if len(allUsersValues) == userCount:
-    #     charts.longestReadBooks(allUsersValues, years)
-    #     allUsersValues.clear()
 
     addUserNameAndOtherValuesToList(userNames, days, userCount, years, charts.longestReadBooks)
 
@@ -300,18 +294,15 @@ def displayAverageRating(years, id, fromFile, userCount):
     x = prettytable.PrettyTable(['Average rating', 'Year'])
     ratings = []
     x.align = 'l'
+    userNames = []
     averageRating = [['Average rating', 'Year']]
     for year in years:
         averageRating = stats.averageRatingOfBook(getbooks.getBooksFromShelfGivenYear(year, id, fromFile))
-        x.add_row(['{0:.2f}'.format(averageRating), year])
-        ratings.append(float(averageRating))
-
-    allUsersValues.append(ratings)
+        x.add_row(['{0:.2f}'.format(float(averageRating[0])), year])
+        ratings.append(float(averageRating[0]))
+        userNames.append(averageRating[1])
 
     print('AVERAGE RATING OF BOOKS READ')
     print(x)
 
-    if len(allUsersValues) == userCount:
-        charts.averageRating(allUsersValues, years)
-        allUsersValues.clear()
-
+    addUserNameAndOtherValuesToList(userNames, ratings, userCount, years, charts.averageRating)

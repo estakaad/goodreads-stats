@@ -117,10 +117,10 @@ def bestBooks(ratings, years, usernames):
 
 
 # Draws a line graph of average rating of read books.
-def averageRating(ratings, years):
+def averageRating(ratings, years, usernames):
     r = True
 
-    ax1 = ch.commonChartSettings(ratings, years, r)
+    ax1 = ch.commonChartSettings(ratings, years, r, usernames)
     ax1.set_title("Average rating of read books\n")
     ax1.set_ylabel('Rating')
     ax1.set_xlabel('Year finished')
