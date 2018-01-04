@@ -88,6 +88,7 @@ def displayLongestReadBooks(years, id, fromFile, userCount):
     x = prettytable.PrettyTable(['Days read', 'Title', 'Author', 'Started', 'Finished'])
     days = []
     titles = []
+    userNames = []
     x.align = 'l'
 
     for year in years:
@@ -102,15 +103,18 @@ def displayLongestReadBooks(years, id, fromFile, userCount):
             x.add_row(['-', '-', '-', '-', '-'])
             days.append(0)
             titles.append('-')
+        userNames.append(innerlist[7])
 
-    allUsersValues.append(days)
+    #allUsersValues.append(days)
 
     print('BOOKS THAT TOOK THE LONGEST TO FINISH')
     print(x)
 
-    if len(allUsersValues) == userCount:
-        charts.longestReadBooks(allUsersValues, years)
-        allUsersValues.clear()
+    # if len(allUsersValues) == userCount:
+    #     charts.longestReadBooks(allUsersValues, years)
+    #     allUsersValues.clear()
+
+    addUserNameAndOtherValuesToList(userNames, days, userCount, years, charts.longestReadBooks)
 
 
 def displayTotalPages(years, id, fromFile, userCount):
