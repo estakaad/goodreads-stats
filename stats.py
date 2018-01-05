@@ -1,180 +1,177 @@
 from datetime import datetime
 import sys
-import re
 import calendar
-import getbooks
-
 
 # Returns the book that took the longest to read in the given year. It doesn't
 # necessarily mean that the user started reading the book the same year it
 # was finished. If the date of starting a book or finishing it unknown,
 # the book is skipped.
-def bookReadForTheLongestInGivenYear(books):
+def book_read_for_the_longest_in_given_year(books):
 
-    bookReadForTheLongest = {}
-    numberOfDays = 0
+    book_read_for_the_longest = {}
+    number_of_days = 0
 
     for key, value in books.items():
-        if ((str(value['started_at']) != '-') and (str(value['read_at']) != '-')):
-            dateStarted = datetime.strptime(str(value['started_at']), '%a %b %d %H:%M:%S %z %Y')
-            dateFinished = datetime.strptime(str(value['read_at']), '%a %b %d %H:%M:%S %z %Y')
-            delta = (dateFinished - dateStarted).days + 1
+        if (str(value['started_at']) != '-') and (str(value['read_at']) != '-'):
+            date_started = datetime.strptime(str(value['started_at']), '%a %b %d %H:%M:%S %z %Y')
+            date_finished = datetime.strptime(str(value['read_at']), '%a %b %d %H:%M:%S %z %Y')
+            delta = (date_finished - date_started).days + 1
 
-            if delta > numberOfDays:
-                numberOfDays = delta
-                bookReadForTheLongest = {key: value, 'numberOfDaysRead': numberOfDays}
+            if delta > number_of_days:
+                number_of_days = delta
+                book_read_for_the_longest = {key: value, 'numberOfDaysRead': number_of_days}
 
-    return bookReadForTheLongest
+    return book_read_for_the_longest
 
 
 # Returns number of pages read in the given year
-def totalPagesReadGivenYear(books):
+def total_pages_read_given_year(books):
 
-    totalPagesPerYear = 0
-    userName = ''
-    usersPages = []
+    total_pages_per_year = 0
+    user_name = ''
+    users_pages = []
 
     for key, value in books.items():
         if value['num_pages'] != '-':
-            totalPagesPerYear+=int(value['num_pages'])
+            total_pages_per_year += int(value['num_pages'])
         else:
-            totalPagesPerYear+=0
-        userName = value['username']
+            total_pages_per_year += 0
+        user_name = value['username']
 
-    usersPages.append(totalPagesPerYear)
-    usersPages.append(userName)
+    users_pages.append(total_pages_per_year)
+    users_pages.append(user_name)
 
-    return usersPages
+    return users_pages
 
 
 # Returns average number of pages read per day in the given year.
-def averageNumberOfPagesReadInDay(books, year):
+def average_number_of_pages_read_in_day(books, year):
 
-    totalPages = totalPagesReadGivenYear(books)
-    userName = ''
+    total_pages = total_pages_read_given_year(books)
+    user_name = ''
 
     for key, value in books.items():
-        userName = value['username']
+        user_name = value['username']
 
-    averagePagesPerDay = 0
-    usersAveragePagesPerDay = []
+    average_pages_per_day = 0
+    users_average_pages_per_day = []
 
     if calendar.isleap(year):
-        averagePagesPerDay = totalPages[0] / 366
+        average_pages_per_day = total_pages[0] / 366
     else:
-        averagePagesPerDay = totalPages[0] / 365
+        average_pages_per_day = total_pages[0] / 365
 
-    usersAveragePagesPerDay.append(averagePagesPerDay)
-    usersAveragePagesPerDay.append(userName)
+    users_average_pages_per_day.append(average_pages_per_day)
+    users_average_pages_per_day.append(user_name)
 
-    return usersAveragePagesPerDay
+    return users_average_pages_per_day
 
 
 # Returns the book with the most ratings among the books read in given year.
-def bookWithMostRatingsInGivenYear(books):
+def book_with_most_ratings_in_given_year(books):
 
-    bookWithMostRatings = {}
-    numberOfRatings = 0
+    book_with_most_ratings = {}
+    number_of_ratings = 0
 
     for key, value in books.items():
-        if int(value['ratings_count']) > numberOfRatings:
-            numberOfRatings = int(value['ratings_count'])
-            bookWithMostRatings = {key: value}
+        if int(value['ratings_count']) > number_of_ratings:
+            number_of_ratings = int(value['ratings_count'])
+            book_with_most_ratings = {key: value}
 
-    return bookWithMostRatings
+    return book_with_most_ratings
 
 
 # Returns the book with the least ratings among the books read in given year.
-def bookWithLeastRatingsInGivenYear(books):
+def book_with_least_ratings_in_given_year(books):
 
-    bookWithLeastRatings = {}
-    numberOfRatings = sys.maxsize
+    book_with_least_ratings = {}
+    number_of_ratings = sys.maxsize
 
     for key, value in books.items():
-        if int(value['ratings_count']) <= numberOfRatings:
-            numberOfRatings = int(value['ratings_count'])
-            bookWithLeastRatings = {key: value}
+        if int(value['ratings_count']) <= number_of_ratings:
+            number_of_ratings = int(value['ratings_count'])
+            book_with_least_ratings = {key: value}
 
-    return bookWithLeastRatings
+    return book_with_least_ratings
 
 
 # Returns the number of ratings a book read this year has on average.
-def averageNumberOfRatings(books):
+def average_number_of_ratings(books):
 
-    sumOfCountOfRatings = 0
-    numberOfRatings = 0
-    userName = ''
-    usersAverageNumberOfRatings = []
+    sum_of_count_of_ratings = 0
+    number_of_ratings = 0
+    user_name = ''
+    users_average_number_of_ratings = []
 
     for key, value in books.items():
-        numberOfRatings+=1
-        sumOfCountOfRatings += int(value['ratings_count'])
-        userName = value['username']
+        number_of_ratings+=1
+        sum_of_count_of_ratings += int(value['ratings_count'])
+        user_name = value['username']
 
-    if numberOfRatings != 0:
-        usersAverageNumberOfRatings.append(sumOfCountOfRatings / numberOfRatings)
+    if number_of_ratings != 0:
+        users_average_number_of_ratings.append(sum_of_count_of_ratings / number_of_ratings)
     else:
-        usersAverageNumberOfRatings.append(0)
+        users_average_number_of_ratings.append(0)
 
-    usersAverageNumberOfRatings.append(userName)
+    users_average_number_of_ratings.append(user_name)
 
-    return usersAverageNumberOfRatings
+    return users_average_number_of_ratings
 
 
 # Returns the worst book read in the given year. The worst meaning having
 # the lowest average rating. Only takes into account books that have
 # at least 15 ratings.
-def worstBookRead(books):
+def worst_book_read(books):
 
-    worstBook = {}
-    worstRating = 5.00
+    worst_book = {}
+    worst_rating = 5.00
 
     for key, value in books.items():
         if int(value['ratings_count']) >= 15:
-            if float(value['average_rating']) <= worstRating:
-                worstRating = float(value['average_rating'])
-                worstBook = {key: value}
+            if float(value['average_rating']) <= worst_rating:
+                worst_rating = float(value['average_rating'])
+                worst_book = {key: value}
 
-    return worstBook
+    return worst_book
 
 
 # Returns the best book read in the given year. The best meaning having
 # the lowest average rating. Only takes into account books that have
 # at least 15 ratings.
-def bestBookRead(books):
+def best_book_read(books):
 
-    bestBook = {}
-    bestRating = 0.00
+    best_book = {}
+    best_rating = 0.00
 
     for key, value in books.items():
         if int(value['ratings_count']) >= 15:
-            if float(value['average_rating']) > bestRating:
-                bestRating = float(value['average_rating'])
-                bestBook = {key: value}
+            if float(value['average_rating']) > best_rating:
+                best_rating = float(value['average_rating'])
+                best_book = {key: value}
 
-    return bestBook
+    return best_book
 
 
 # Returns an average rating of books read during the given year. Only takes
 # into account books that have at least 15 ratings.
-def averageRatingOfBook(books):
+def average_rating_of_book(books):
 
-    numberOfRatings = 0
-    sumOfRatings = 0
-    userName = ''
-    usersAverageRating = []
+    number_of_ratings = 0
+    sum_of_ratings = 0
+    user_name = ''
+    users_average_rating = []
 
     for key, value in books.items():
         if int(value['ratings_count']) >= 15:
-            sumOfRatings+=float(value['average_rating'])
-            numberOfRatings+=1
-        userName = value['username']
+            sum_of_ratings+=float(value['average_rating'])
+            number_of_ratings+=1
+        user_name = value['username']
 
-    if numberOfRatings != 0:
-        usersAverageRating.append(sumOfRatings / numberOfRatings)
+    if number_of_ratings != 0:
+        users_average_rating.append(sum_of_ratings / number_of_ratings)
     else:
-        usersAverageRating.append(0)
+        users_average_rating.append(0)
 
-    usersAverageRating.append(userName)
+    users_average_rating.append(user_name)
 
-    return usersAverageRating
+    return users_average_rating

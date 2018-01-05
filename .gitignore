@@ -107,3 +107,4 @@ books.txt
 /books
 /images
 !requirements.txt
+/.idea

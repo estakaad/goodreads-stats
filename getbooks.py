@@ -2,8 +2,6 @@ import configparser
 import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime
-import pickle
-import view
 import os
 import json
 
@@ -12,7 +10,7 @@ config.read("config.ini")
 
 
 # Helper function for getting settings from config.ini
-def configSectionMap(section):
+def config_section_map(section):
     dict1 = {}
     options = config.options(section)
     for option in options:
@@ -27,21 +25,21 @@ def configSectionMap(section):
 
 
 # A GET request to retrieve books on a user's shelf's one page. Returns a XML.
-def getBooksOnPage(userId, page):
+def get_books_on_page(user_id, page):
 
-    key = configSectionMap("SectionOne")['key']
-    v = configSectionMap("SectionOne")['v']
-    shelf = configSectionMap("SectionOne")['shelf']
-    per_page = str(configSectionMap("SectionOne")['per_page'])
+    key = config_section_map("SectionOne")['key']
+    v = config_section_map("SectionOne")['v']
+    shelf = config_section_map("SectionOne")['shelf']
+    per_page = str(config_section_map("SectionOne")['per_page'])
 
     r = requests.get('https://www.goodreads.com/review/list/' \
-        + str(userId) \
+        + str(user_id) \
         + '.xml?key=' \
         + key \
         + '&v=' \
         + v \
         + '&id=' \
-        + str(userId) \
+        + str(user_id) \
         + '&shelf=' \
         + shelf \
         + '&page=' \
@@ -53,30 +51,30 @@ def getBooksOnPage(userId, page):
 
 
 # GET request to get user info
-def getUserInfo(userId):
+def get_user_info(user_id):
 
-    key = configSectionMap("SectionOne")['key']
-    r = requests.get('https://www.goodreads.com/user/show/' + str(userId) + '.xml?key=' + key)
+    key = config_section_map("SectionOne")['key']
+    r = requests.get('https://www.goodreads.com/user/show/' + str(user_id) + '.xml?key=' + key)
 
     return ET.fromstring(r.content)
 
 
 # Returns a dictionary of all the books on a user's Goodreads read-shelf.
-def getAllBooksOnShelf(userId):
+def get_all_books_on_shelf(user_id):
 
-    r = getUserInfo(userId)
-    userName = r[1][1].text
+    r = get_user_info(user_id)
+    user_name = r[1][1].text
 
     books = {}
-    nthBookOnPage = 0
+    nth_book_on_page = 0
     page = 1
 
-    numberOfBooksOnPage = len(list(getBooksOnPage(userId, page).iter('review')))
+    number_of_books_on_page = len(list(get_books_on_page(user_id, page).iter('review')))
 
-    while nthBookOnPage < numberOfBooksOnPage:
-        numberOfBooksOnPage = len(list(getBooksOnPage(userId, page).iter('review')))
-        for review in getBooksOnPage(userId, page).iter('review'):
-            nthBookOnPage+=1
+    while nth_book_on_page < number_of_books_on_page:
+        number_of_books_on_page = len(list(get_books_on_page(user_id, page).iter('review')))
+        for review in get_books_on_page(user_id, page).iter('review'):
+            nth_book_on_page+=1
             books[review[0].text] = {}
 
             if review[1][5].text is None:
@@ -114,35 +112,35 @@ def getAllBooksOnShelf(userId):
             else:
                 books[review[0].text]['read_at'] = review[10].text
 
-            if userName is None:
+            if user_name is None:
                 books[review[0].text]['username'] = ''
             else:
-                books[review[0].text]['username'] = userName
+                books[review[0].text]['username'] = user_name
 
-            if nthBookOnPage != numberOfBooksOnPage:
+            if nth_book_on_page != number_of_books_on_page:
                 continue
             else:
-                nthBookOnPage = 0
+                nth_book_on_page = 0
                 page+=1
 
     return books
 
 
 # Saves dictionary to file
-def serializeBooks(books, userId):
-    filename = 'books/'+ str(userId) + '.json'
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
+def serialize_books(books, user_id):
+    file_name = 'books/' + str(user_id) + '.json'
+    os.makedirs(os.path.dirname(file_name), exist_ok=True)
 
-    with open(filename, 'w') as outfile:
-        json.dump(books, outfile, indent=4)
-    outfile.close()
+    with open(file_name, 'w') as out_file:
+        json.dump(books, out_file, indent=4)
+    out_file.close()
 
 
 # Reads dictionary from file
-def deserializeBooks(file):
+def deserialize_books(file):
     with open(file) as json_file:
-        dict = json.load(json_file)
-    return dict
+        dictionary = json.load(json_file)
+    return dictionary
 
 
 # Returns all books the user has marked as read. This can be done either making
@@ -150,29 +148,29 @@ def deserializeBooks(file):
 # loading from file is chosen, a file with a user's Goodread's ID is looked for.
 # In case it doesn't exist, a GET request is made instead. After a GET request,
 # the results are serialized.
-def loadFromFileOrFetchNewDataAndSerialize(userId, fromFile):
-    filename = 'books/'+ str(userId) + '.json'
+def load_from_file_or_fetch_new_data_and_serialize(user_id, from_file):
+    filename = 'books/' + str(user_id) + '.json'
     books = {}
 
-    if fromFile:
+    if from_file:
         try:
-            books = deserializeBooks(filename)
+            books = deserialize_books(filename)
         except IOError:
             print('File does not appear to exist. Trying get books from Goodreads instead...')
-            books = getAllBooksOnShelf(userId)
-            serializeBooks(books, userId)
+            books = get_all_books_on_shelf(user_id)
+            serialize_books(books, user_id)
     else:
-        books = getAllBooksOnShelf(userId)
-        serializeBooks(books, userId)
+        books = get_all_books_on_shelf(user_id)
+        serialize_books(books, user_id)
 
     return books
 
 
 # Returns a dictionary of books finished during the given year.
-def getBooksFromShelfGivenYear(year, userId, fromFile):
-    booksInYear = loadFromFileOrFetchNewDataAndSerialize(userId, fromFile)
+def get_books_from_shelf_given_year(year, user_id, from_file):
+    booksInYear = load_from_file_or_fetch_new_data_and_serialize(user_id, from_file)
 
     booksInYear = { k:v for k,v in booksInYear.items() if v['read_at'] != '-' }
-    booksInYear = { k:v for k,v in booksInYear.items() if datetime.strptime(str(v['read_at']), '%a %b %d %H:%M:%S %z %Y').year == year }
+    booksInYear = { k:v for k,v in booksInYear.items() if datetime.strptime(str(v['read_at']), '%a %b %d %H:%M:%S %z %Y').year == year}
 
     return booksInYear
