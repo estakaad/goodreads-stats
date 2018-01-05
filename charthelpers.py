@@ -23,10 +23,8 @@ def common_chart_settings(axis_y, axis_x, rating, user_names):
     max_count = 0
 
     for one_user_data in axis_y:
-        print(one_user_data)
         plt.plot(axis_x, one_user_data, linestyle="dashed", marker="o", label=user_names[axis_y.index(one_user_data)][0])
         for x in one_user_data:
-            print(x)
             if x > max_count:
                 max_count = x
 

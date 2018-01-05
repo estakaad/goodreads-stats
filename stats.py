@@ -54,7 +54,6 @@ def average_number_of_pages_read_in_day(books, year):
     for key, value in books.items():
         user_name = value['username']
 
-    average_pages_per_day = 0
     users_average_pages_per_day = []
 
     if calendar.isleap(year):
