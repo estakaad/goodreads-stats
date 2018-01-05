@@ -103,18 +103,22 @@ def averageNumberOfRatings(books):
 
     sumOfCountOfRatings = 0
     numberOfRatings = 0
+    userName = ''
+    usersAverageNumberOfRatings = []
 
     for key, value in books.items():
         numberOfRatings+=1
         sumOfCountOfRatings += int(value['ratings_count'])
+        userName = value['username']
 
-    # In case of zero ratings.
-    while True:
-        try:
-            return sumOfCountOfRatings / numberOfRatings
-            break
-        except ZeroDivisionError:
-            return 0
+    if numberOfRatings != 0:
+        usersAverageNumberOfRatings.append(sumOfCountOfRatings / numberOfRatings)
+    else:
+        usersAverageNumberOfRatings.append(0)
+
+    usersAverageNumberOfRatings.append(userName)
+
+    return usersAverageNumberOfRatings
 
 
 # Returns the worst book read in the given year. The worst meaning having

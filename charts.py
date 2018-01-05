@@ -74,6 +74,8 @@ def leastPopularBooks(count, years, usernames):
 
 # Draws a line chart showing the number of ratings a book read in given year had on average.
 def averageNumberOfRatings(count, years, usernames):
+    print(count)
+    print(usernames)
     r = False
 
     ax1 = ch.commonChartSettings(count, years, r, usernames)

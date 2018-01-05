@@ -24,8 +24,10 @@ def commonChartSettings(axisy, axisx, rating, usernames):
     maxCount = 0
 
     for oneUserData in axisy:
+        print(oneUserData)
         plt.plot(axisx, oneUserData, linestyle="dashed", marker="o", label=usernames[axisy.index(oneUserData)][0])
         for x in oneUserData:
+            print(x)
             if x > maxCount:
                 maxCount = x
 
