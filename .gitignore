@@ -101,7 +101,7 @@ venv-py3
 # mypy
 .mypy_cache/
 
-config.ini
+config.py
 books.txt
 *.txt
 /books

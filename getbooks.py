@@ -4,47 +4,30 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 import os
 import json
-
-config = configparser.ConfigParser()
-config.read("config.ini")
-
-
-# Helper function for getting settings from config.ini
-def config_section_map(section):
-    dict1 = {}
-    options = config.options(section)
-    for option in options:
-        try:
-            dict1[option] = config.get(section, option)
-            if dict1[option] == -1:
-                DebugPrint("skip: %s" % option)
-        except:
-            print("exception on %s!" % option)
-            dict1[option] = None
-    return dict1
+from config import API_KEY
 
 
 # A GET request to retrieve books on a user's shelf's one page. Returns a XML.
 def get_books_on_page(user_id, page):
 
-    key = config_section_map("SectionOne")['key']
-    v = config_section_map("SectionOne")['v']
-    shelf = config_section_map("SectionOne")['shelf']
-    per_page = str(config_section_map("SectionOne")['per_page'])
+    key = API_KEY
+    v = '2'
+    shelf = 'read'
+    per_page = '50'
 
-    r = requests.get('https://www.goodreads.com/review/list/' \
-        + str(user_id) \
-        + '.xml?key=' \
-        + key \
-        + '&v=' \
-        + v \
-        + '&id=' \
-        + str(user_id) \
-        + '&shelf=' \
-        + shelf \
-        + '&page=' \
-        + str(page) \
-        + '&per_page=' \
+    r = requests.get('https://www.goodreads.com/review/list/'
+        + str(user_id)
+        + '.xml?key='
+        + key
+        + '&v='
+        + v
+        + '&id='
+        + str(user_id)
+        + '&shelf='
+        + shelf
+        + '&page='
+        + str(page)
+        + '&per_page='
         + per_page)
 
     return ET.fromstring(r.content)
@@ -53,8 +36,7 @@ def get_books_on_page(user_id, page):
 # GET request to get user info
 def get_user_info(user_id):
 
-    key = config_section_map("SectionOne")['key']
-    r = requests.get('https://www.goodreads.com/user/show/' + str(user_id) + '.xml?key=' + key)
+    r = requests.get('https://www.goodreads.com/user/show/' + str(user_id) + '.xml?key=' + API_KEY)
 
     return ET.fromstring(r.content)
 
@@ -121,7 +103,7 @@ def get_all_books_on_shelf(user_id):
                 continue
             else:
                 nth_book_on_page = 0
-                page+=1
+                page += 1
 
     return books
 
@@ -145,12 +127,11 @@ def deserialize_books(file):
 
 # Returns all books the user has marked as read. This can be done either making
 # a GET request or loading the file with the serialized dictionary. In case
-# loading from file is chosen, a file with a user's Goodread's ID is looked for.
+# loading from file is chosen, a file with a user's Goodreads' ID is looked for.
 # In case it doesn't exist, a GET request is made instead. After a GET request,
 # the results are serialized.
 def load_from_file_or_fetch_new_data_and_serialize(user_id, from_file):
     filename = 'books/' + str(user_id) + '.json'
-    books = {}
 
     if from_file:
         try:
@@ -168,9 +149,9 @@ def load_from_file_or_fetch_new_data_and_serialize(user_id, from_file):
 
 # Returns a dictionary of books finished during the given year.
 def get_books_from_shelf_given_year(year, user_id, from_file):
-    booksInYear = load_from_file_or_fetch_new_data_and_serialize(user_id, from_file)
+    books_in_year = load_from_file_or_fetch_new_data_and_serialize(user_id, from_file)
 
-    booksInYear = { k:v for k,v in booksInYear.items() if v['read_at'] != '-' }
-    booksInYear = { k:v for k,v in booksInYear.items() if datetime.strptime(str(v['read_at']), '%a %b %d %H:%M:%S %z %Y').year == year}
+    books_in_year = { k: v for k, v in books_in_year.items() if v['read_at'] != '-'}
+    books_in_year = { k: v for k, v in books_in_year.items() if datetime.strptime(str(v['read_at']), '%a %b %d %H:%M:%S %z %Y').year == year}
 
-    return booksInYear
+    return books_in_year

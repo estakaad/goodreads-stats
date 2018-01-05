@@ -2,6 +2,7 @@ from datetime import datetime
 import sys
 import calendar
 
+
 # Returns the book that took the longest to read in the given year. It doesn't
 # necessarily mean that the user started reading the book the same year it
 # was finished. If the date of starting a book or finishing it unknown,

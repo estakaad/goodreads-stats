@@ -9,7 +9,7 @@ def longest_read_books(days, years, user_names):
     ax1.set_title("Books that took the longest to read\n")
     ax1.set_ylabel('Days')
     ax1.set_xlabel('Year finished')
-    # ch.displayIntIntStrAnnotations(days, years)
+
     ch.display_integers_as_ticks()
     ch.save_as_image('_longest_read_books')
 
@@ -22,6 +22,7 @@ def total_pages_read(count, years, user_names):
     ax1.set_title("Pages read\n")
     ax1.set_ylabel('Number of pages')
     ax1.set_xlabel('Year')
+
     ch.display_integers_as_ticks()
     ch.save_as_image('_total_pages_read')
 
@@ -35,7 +36,6 @@ def average_number_of_pages(count, years, user_names):
     ax1.set_ylabel('Number of pages')
     ax1.set_xlabel('Year')
 
-    # ch.displayFloatIntAnnotations(count, years)
     ch.display_integers_as_ticks()
     ch.save_as_image('_average_num_pages_per_day')
 
@@ -50,7 +50,6 @@ def most_popular_books(count, years, user_names):
     ax1.set_ylabel('Number of ratings')
     ax1.set_xlabel('Year finished')
 
-    # ch.displayIntIntStrAnnotations(count, years)
     ch.display_integers_as_ticks()
     ch.save_as_image('_most_popular_books')
 
@@ -71,8 +70,6 @@ def least_popular_books(count, years, user_names):
 
 # Draws a line chart showing the number of ratings a book read in given year had on average.
 def average_number_of_ratings(count, years, user_names):
-    print(count)
-    print(user_names)
     r = False
 
     ax1 = ch.common_chart_settings(count, years, r, user_names)
@@ -80,7 +77,6 @@ def average_number_of_ratings(count, years, user_names):
     ax1.set_ylabel('Count')
     ax1.set_xlabel('Year finished')
 
-    # ch.displayFloatIntAnnotations(count, years)
     ch.display_integers_as_ticks()
     ch.save_as_image('_average_number_of_ratings')
 
@@ -95,7 +91,6 @@ def worst_books(ratings, years, user_names):
     ax1.set_ylabel('Rating')
     ax1.set_xlabel('Year finished')
 
-    # ch.displayFloatIntStrAnnotations(ratings, years, titles)
     ch.display_integers_as_ticks()
     ch.save_as_image('_worst_books')
 
@@ -110,7 +105,6 @@ def best_books(ratings, years, user_names):
     ax1.set_ylabel('Rating')
     ax1.set_xlabel('Year finished')
 
-    # ch.displayFloatIntStrAnnotations(ratings, years, titles)
     ch.display_integers_as_ticks()
     ch.save_as_image('_best_books')
 
@@ -124,6 +118,5 @@ def average_rating(ratings, years, user_names):
     ax1.set_ylabel('Rating')
     ax1.set_xlabel('Year finished')
 
-    # ch.displayFloatIntStrAnnotations(ratings, years, titles)
     ch.display_integers_as_ticks()
     ch.save_as_image('_average_rating')

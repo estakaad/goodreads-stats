@@ -118,10 +118,10 @@ def display_total_pages(years, id, from_file, user_count):
     count = []
     user_names = []
     for year in years:
-        usersPages = stats.total_pages_read_given_year(getbooks.get_books_from_shelf_given_year(year, id, from_file))
-        x.add_row([usersPages[0], year])
-        count.append(int(usersPages[0]))
-        user_names.append(usersPages[1])
+        users_pages = stats.total_pages_read_given_year(getbooks.get_books_from_shelf_given_year(year, id, from_file))
+        x.add_row([users_pages[0], year])
+        count.append(int(users_pages[0]))
+        user_names.append(users_pages[1])
 
     print('TOTAL NUMBER OF PAGES READ')
     print(x)
@@ -279,7 +279,6 @@ def display_average_rating(years, id, from_file, user_count):
     ratings = []
     x.align = 'l'
     user_names = []
-    average_rating = [['Average rating', 'Year']]
     for year in years:
         average_rating = stats.average_rating_of_book(getbooks.get_books_from_shelf_given_year(year, id, from_file))
         x.add_row(['{0:.2f}'.format(float(average_rating[0])), year])

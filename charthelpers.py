@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import matplotlib.ticker
-import charts
 from datetime import datetime
 import os
 
@@ -39,32 +38,6 @@ def common_chart_settings(axis_y, axis_x, rating, user_names):
         plt.axis([min(axis_x) - 1, max(axis_x) + 1, 0, max_count * 1.2])
 
     return ax1
-
-
-def display_int_and_int_annotations(y, z):
-    for x in range(0, len(y)):
-        plt.annotate((str(y[x])), xy=(z[x], y[x]),xytext=(z[x]+0.25, y[x]-0.5))
-
-
-def display_int_int_str_annotations(axis_x_int, axis_y_int, string):
-    for x in range(0, len(axis_x_int)):
-        if string[x] != '-':
-            plt.annotate((str(axis_x_int[x]) + '\n ("' + string[x] + '")'), xy=(axis_y_int[x], axis_x_int[x]), xytext=(axis_y_int[x] - 0.25, axis_x_int[x] + 0.7))
-        else:
-            plt.annotate((str(axis_x_int[x])), xy=(axis_y_int[x], axis_x_int[x]), xytext=(axis_y_int[x] - 0.25, axis_x_int[x] + 0.7))
-
-
-def display_float_int_annotations(z, y):
-    for x in range(0, len(z)):
-        plt.annotate(('{0:.2f}'.format(z[x])), xy=(y[x], z[x]),xytext=(y[x]+0.25, z[x]-0.5))
-
-
-def display_float_int_str_annotations(z, y, q):
-    for x in range(0, len(z)):
-        if q[x] != '-':
-            plt.annotate((str(z[x]) + '\n ("' + q[x] + '")'), xy=(y[x], z[x]),xytext=(y[x]-0.25, z[x]-0.5))
-        else:
-            plt.annotate((str(z[x])), xy=(y[x], z[x]),xytext=(y[x]-0.25, z[x]-0.5))
 
 
 def save_as_image(file_name):
