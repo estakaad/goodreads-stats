@@ -133,20 +133,19 @@ def displayAveragePagesPerDay(years, id, fromFile, userCount):
 
     x = prettytable.PrettyTable(['Pages per day', 'Year'])
     count = []
+    userNames = []
     x.align = 'l'
     for year in years:
         pages = stats.averageNumberOfPagesReadInDay(getbooks.getBooksFromShelfGivenYear(year, id, fromFile), year)
-        x.add_row(['{0:.2f}'.format(pages), year])
-        count.append(pages)
+        x.add_row(['{0:.2f}'.format(float(pages[0])), year])
+        count.append(pages[0])
+        userNames.append(pages[1])
 
-    allUsersValues.append(count)
 
     print('AVERAGE NUMBER OF PAGES READ PER DAY')
     print(x)
 
-    if len(allUsersValues) == userCount:
-        charts.averageNumberOfPages(allUsersValues, years)
-        allUsersValues.clear()
+    addUserNameAndOtherValuesToList(userNames, count, userCount, years, charts.averageNumberOfPages)
 
 
 def displayMostPopularBooks(years, id, fromFile, userCount):

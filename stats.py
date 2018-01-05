@@ -43,19 +43,31 @@ def totalPagesReadGivenYear(books):
 
     usersPages.append(totalPagesPerYear)
     usersPages.append(userName)
-    print(usersPages)
+
     return usersPages
 
 
 # Returns average number of pages read per day in the given year.
 def averageNumberOfPagesReadInDay(books, year):
 
-    if calendar.isleap(year):
-        averagePagesPerDey = totalPagesReadGivenYear(books) / 366
-    else:
-        averagePagesPerDey = totalPagesReadGivenYear(books) / 365
+    totalPages = totalPagesReadGivenYear(books)
+    userName = ''
 
-    return averagePagesPerDey
+    for key, value in books.items():
+        userName = value['username']
+
+    averagePagesPerDay = 0
+    usersAveragePagesPerDay = []
+
+    if calendar.isleap(year):
+        averagePagesPerDay = totalPages[0] / 366
+    else:
+        averagePagesPerDay = totalPages[0] / 365
+
+    usersAveragePagesPerDay.append(averagePagesPerDay)
+    usersAveragePagesPerDay.append(userName)
+
+    return usersAveragePagesPerDay
 
 
 # Returns the book with the most ratings among the books read in given year.

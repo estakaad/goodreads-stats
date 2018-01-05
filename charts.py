@@ -30,10 +30,10 @@ def totalPagesRead(count, years, usernames):
 
 
 # Draws a line chart showing how many pages were read on an average day.
-def averageNumberOfPages(count, years):
+def averageNumberOfPages(count, years, usernames):
     r = False
 
-    ax1 = ch.commonChartSettings(count, years, r)
+    ax1 = ch.commonChartSettings(count, years, r, usernames)
     ax1.set_title("Pages read per day\n")
     ax1.set_ylabel('Number of pages')
     ax1.set_xlabel('Year')
