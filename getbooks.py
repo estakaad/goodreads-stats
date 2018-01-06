@@ -7,7 +7,7 @@ import json
 from config import API_KEY
 
 
-# A GET request to retrieve books on a user's shelf's one page. Returns a XML.
+# A GET request to retrieve books on a user's shelf's one page. Returns a XML. API_KEY is a variable in config.py
 def get_books_on_page(user_id, page):
 
     key = API_KEY
@@ -151,7 +151,7 @@ def load_from_file_or_fetch_new_data_and_serialize(user_id, from_file):
 def get_books_from_shelf_given_year(year, user_id, from_file):
     books_in_year = load_from_file_or_fetch_new_data_and_serialize(user_id, from_file)
 
-    books_in_year = { k: v for k, v in books_in_year.items() if v['read_at'] != '-'}
-    books_in_year = { k: v for k, v in books_in_year.items() if datetime.strptime(str(v['read_at']), '%a %b %d %H:%M:%S %z %Y').year == year}
+    books_in_year = {k: v for k, v in books_in_year.items() if v['read_at'] != '-'}
+    books_in_year = {k: v for k, v in books_in_year.items() if datetime.strptime(str(v['read_at']), '%a %b %d %H:%M:%S %z %Y').year == year}
 
     return books_in_year

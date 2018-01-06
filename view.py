@@ -180,7 +180,7 @@ def display_average_number_of_ratings(years, id, from_file, user_count):
     for year in years:
         ratings = stats.average_number_of_ratings(getbooks.get_books_from_shelf_given_year(year, id, from_file))
         count.append(ratings[0])
-        user_names.append(ratings[1])
+    user_names.append(ratings[1])
 
     add_user_name_and_other_values_to_list(user_names, count, user_count, years, charts.average_number_of_ratings)
 

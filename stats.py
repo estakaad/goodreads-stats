@@ -12,15 +12,16 @@ def book_read_for_the_longest_in_given_year(books):
     book_read_for_the_longest = {}
     number_of_days = 0
 
-    for key, value in books.items():
-        if (str(value['started_at']) != '-') and (str(value['read_at']) != '-'):
-            date_started = datetime.strptime(str(value['started_at']), '%a %b %d %H:%M:%S %z %Y')
-            date_finished = datetime.strptime(str(value['read_at']), '%a %b %d %H:%M:%S %z %Y')
-            delta = (date_finished - date_started).days + 1
+    if books:
+        for key, value in books.items():
+            if (str(value['started_at']) != '-') and (str(value['read_at']) != '-'):
+                date_started = datetime.strptime(str(value['started_at']), '%a %b %d %H:%M:%S %z %Y')
+                date_finished = datetime.strptime(str(value['read_at']), '%a %b %d %H:%M:%S %z %Y')
+                delta = (date_finished - date_started).days + 1
 
-            if delta > number_of_days:
-                number_of_days = delta
-                book_read_for_the_longest = {key: value, 'numberOfDaysRead': number_of_days}
+                if delta > number_of_days:
+                    number_of_days = delta
+                    book_read_for_the_longest = {key: value, 'numberOfDaysRead': number_of_days}
 
     return book_read_for_the_longest
 
