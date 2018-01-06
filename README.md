@@ -12,4 +12,4 @@ This program will give answers to the following questions:
 * What was the best book I read in year x?
 * How good was the average book I read in year x?
 
-Answers will be printed to the console and displayed as simple line plots.
+Answers to these questions will be plotted as line charts and saved as PNG images.
