@@ -12,4 +12,6 @@ This program will give answers to the following questions:
 * What was the best book I read in year x?
 * How good was the average book I read in year x?
 
-Answers to these questions will be plotted as line charts and saved as PNG images.
+Answers to these questions will be plotted as line charts and saved as PNG images (see example below).
+
+![Average rating of books read](https://i.imgur.com/fUW5P4T.png)
